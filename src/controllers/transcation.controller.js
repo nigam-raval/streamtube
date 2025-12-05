@@ -35,7 +35,7 @@ const tranferMoney = asyncHandler(async (req,res) => {
     const sender= req.user?._id
 
     if(!receiver || !sender || !amount){
-        throw new ApiError("sender, receiver, amount require")
+        throw new ApiError(400,"sender, receiver, amount require")
     }
     if(amount<=0){
         throw new ApiError(400,"amount must be postive")
