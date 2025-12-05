@@ -1,0 +1,13 @@
+.env
+node_modules
+public/temp/*
+.dockerignore
+.gitignore
+.prettierignore
+.prettierrc
+compose.yaml
+dockerfile
+readme.md
+policies/*
+apiTestingCollectionsBruno
+generated/prisma
