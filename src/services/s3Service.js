@@ -36,7 +36,9 @@ const generatePresignedDownloadUrl= async function (Key,time="300") {
         Bucket: process.env.STORAGE_BUCKET,
         Key: Key,
       })
-      const url= await getSignedUrl(s3,command,{expiresIn: time})
+      let url= await getSignedUrl(s3Client,command,{expiresIn: time})
+      url = url.replace("bucket-storage", "localhost");
+
       return url
   } catch (error) {
 
@@ -54,8 +56,7 @@ const generatePresignedUploadUrl= async function(ContentType,Key, time="300"){
             ContentType: ContentType,
           });
         
-        const uploadUrl= await getSignedUrl(s3,command,{expiresIn: time})
-
+        let uploadUrl= await getSignedUrl(s3Client,command,{expiresIn: time})
         return uploadUrl
         
   } catch (error) {
@@ -148,6 +149,11 @@ try {
   
 }
 
+
+
+const testurl= await generatePresignedUploadUrl("text/plain","imagee") // image/png
+console.log(testurl)
+//await uploadTestFile(testurl)
 
 
 
