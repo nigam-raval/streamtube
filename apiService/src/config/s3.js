@@ -21,9 +21,10 @@ const {
       secretAccessKey: STORAGE_SECRET_KEY,
     },
     endpoint: STORAGE_ENDPOINT || undefined,
-    forcePathStyle: STORAGE_FORCE_PATH_STYLE,
+    forcePathStyle: String(STORAGE_FORCE_PATH_STYLE).toLowerCase(),
   });
 
+  
 
   const stsClient = new STSClient({
     region: STORAGE_REGION,
@@ -32,7 +33,7 @@ const {
       secretAccessKey: STORAGE_STS_PASSWORD
     },
     endpoint: STORAGE_ENDPOINT || undefined,
-    forcePathStyle: STORAGE_FORCE_PATH_STYLE,
+    forcePathStyle: String(STORAGE_FORCE_PATH_STYLE).toLowerCase(),
     });
   
   export  {s3Client,stsClient};
