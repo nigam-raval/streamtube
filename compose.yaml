@@ -1,4 +1,21 @@
 services:
+  streamtube-app:
+    image: streamtube-app:latest
+    environment:
+      DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      PORT: ${PORT}
+      MONGODB_URI: mongodb://root:root@mongodb:27017
+      AUTH_SOURCE: ${AUTH_SOURCE}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET} 
+      ACCESS_TOKEN_EXPIRE: ${ACCESS_TOKEN_EXPIRE}
+      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+      REFRESH_TOKEN_EXPIRE: ${REFRESH_TOKEN_EXPIRE}
+    ports:
+      - 127.0.0.1:8001:${PORT}
+    networks:
+        - socialmedia
 
   db:
     image: mongo
@@ -39,8 +56,16 @@ services:
     environment:
       MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY}
       MINIO_ROOT_PASSWORD: ${STORAGE_SECRET_KEY}
+      # for event notfication
+      MINIO_NOTIFY_AMQP_ENABLE_rabbitmq1: ${MINIO_NOTIFY_AMQP_ENABLE_rabbitmq1}
+      MINIO_NOTIFY_AMQP_URL_rabbitmq1: ${MINIO_NOTIFY_AMQP_URL_rabbitmq1}
+      MINIO_NOTIFY_AMQP_EXCHANGE_rabbitmq1: ${MINIO_NOTIFY_AMQP_EXCHANGE_rabbitmq1}
+      MINIO_NOTIFY_AMQP_EXCHANGE_TYPE_rabbitmq1: ${MINIO_NOTIFY_AMQP_EXCHANGE_TYPE_rabbitmq1}
+      MINIO_NOTIFY_AMQP_ROUTING_KEY_rabbitmq1: ${MINIO_NOTIFY_AMQP_ROUTING_KEY_rabbitmq1}
+      MINIO_NOTIFY_AMQP_DELIVERY_MODE_rabbitmq1: ${MINIO_NOTIFY_AMQP_DELIVERY_MODE_rabbitmq1}
+      MINIO_NOTIFY_AMQP_DURABLE_rabbitmq1: ${MINIO_NOTIFY_AMQP_DURABLE_rabbitmq1}
     ports:
-      - 127.0.0.1:9000:9000  # HTTP port for MinIO
+      - 9000:9000  # HTTP port for MinIO
       - 127.0.0.1:9001:9001  # Port for MinIO Web UI (optional)
     networks:
         - socialmedia
@@ -54,7 +79,7 @@ services:
       container_name: rabbitmq
       image: rabbitmq:4-management
       ports:
-          - 127.0.0.1:5672:5672
+          - 5672:5672
           - 127.0.0.1:15672:15672
       networks:
         - socialmedia

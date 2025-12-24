@@ -16,7 +16,7 @@ function generateUserCoverImageKey(userId,mimeType) {
 
 function generateThumbnailKey(userId,videoId,mimeType) {
   const fileExtension= getExtensionFromMime(mimeType)
-  return `users/${userId}/${videoId}/thumbnails.${fileExtension}`;
+  return `users/${userId}/${videoId}/thumbnail.${fileExtension}`;
 }
 
 function generateTempVideoKey(userId,videoId,mimeType) {

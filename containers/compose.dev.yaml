@@ -1,0 +1,48 @@
+services:
+    node:
+      image: node:trixie-slim
+      container_name: node
+      ports:
+        - 127.0.0.1:8001:${PORT}
+      volumes:
+        - ./:/app/
+      working_dir: /app 
+      command: sh -c "npm run dev"
+      networks:
+        - socialmedia
+      user: 1000:1000
+      environment:
+        DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
+        DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        PORT: ${PORT}
+        MONGODB_URI: mongodb://root:root@mongodb:27017
+        AUTH_SOURCE: ${AUTH_SOURCE}
+        CORS_ORIGIN: ${CORS_ORIGIN}
+        ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET} 
+        ACCESS_TOKEN_EXPIRE: ${ACCESS_TOKEN_EXPIRE}
+        REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+        REFRESH_TOKEN_EXPIRE: ${REFRESH_TOKEN_EXPIRE}
+  
+    pgadmin:
+      image: dpage/pgadmin4:latest
+      container_name: pgadmin
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      networks:
+        - socialmedia
+      ports:
+        - "127.0.0.1:5050:80"
+      # depends_on:
+      #   - postgres
+      volumes:
+        - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  pgadmin-data:
+
+networks:
+  socialmedia:
+    external: true
+
