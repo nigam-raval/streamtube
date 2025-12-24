@@ -40,7 +40,7 @@ services:
         - pgadmin-data:/var/lib/pgadmin
 
 
-    db:
+    mongodb:
       image: mongo
       container_name: mongodb
       restart: always
