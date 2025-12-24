@@ -11,7 +11,17 @@ services:
       networks:
         - socialmedia
       user: 1000:1000
-
+      environment:
+        DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
+        DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        PORT: ${PORT}
+        MONGODB_URI: ${MONGODB_URI}
+        AUTH_SOURCE: ${AUTH_SOURCE}
+        CORS_ORIGIN: ${CORS_ORIGIN}
+        ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET} 
+        ACCESS_TOKEN_EXPIRE: ${ACCESS_TOKEN_EXPIRE}
+        REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+        REFRESH_TOKEN_EXPIRE: ${REFRESH_TOKEN_EXPIRE}
   
     pgadmin:
       image: dpage/pgadmin4:latest

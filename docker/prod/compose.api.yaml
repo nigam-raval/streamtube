@@ -1,6 +1,6 @@
 services:  
-  streamtube-app:
-    image: streamtube-app:latest
+  streamtube-api:
+    image: streamtube-api:latest
     environment:
       DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
       DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}

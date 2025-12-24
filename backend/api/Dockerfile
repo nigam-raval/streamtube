@@ -1,6 +1,6 @@
 FROM node:trixie-slim
 
-WORKDIR /usr/src/supersocialmedia
+WORKDIR /app
 
 
 COPY package.json ./
