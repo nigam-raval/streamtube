@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCurrentUserBalance, tranferMoney } from "../controllers/transcation.controller.js";
+import { getCurrentUserBalance, tranferMoney } from "../controllers/transaction.controller.js";
 
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 

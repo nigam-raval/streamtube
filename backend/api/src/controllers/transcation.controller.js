@@ -71,7 +71,7 @@ const tranferMoney = asyncHandler(async (req,res) => {
 
     res
     .status(200)
-    .json(new ApiResponse(200,{},"transcation is successfull"));
+    .json(new ApiResponse(200,{},"transaction is successfull"));
 
 
 
