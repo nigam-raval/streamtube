@@ -71,7 +71,7 @@ services:
         - socialmedia
     volumes:
       - minio-data:/data
-      - ./policies/sts-socialmedia-readonly-policy.json:/polices/sts-socialmedia-readonly-policy.json
+      - ./infra/s3/sts-socialmedia-readonly-policy.json:/polices/sts-socialmedia-readonly-policy.json
     command: server /data --console-address ":9001"
     restart: always
     
