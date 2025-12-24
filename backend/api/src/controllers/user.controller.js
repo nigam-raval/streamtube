@@ -4,9 +4,9 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
-import { deleteByPrefixOnS3, generatePresignedUploadUrl, stsOnS3 } from "../services/s3Service.js";
+import { deleteByPrefixOnS3, generatePresignedUploadUrl, stsOnS3 } from "../services/s3.service.js";
 import { generateUserProfileImageKey,generateUserCoverImageKey, generateUrl,  } from "../utils/s3KeyGenerators.js";
-import prisma from "../config/prisma.js";
+import prisma from "../config/prisma.config.js";
 import { console } from "inspector";
 
 

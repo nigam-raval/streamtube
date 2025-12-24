@@ -4,7 +4,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import { generateThumbnailKey, generateTempVideoKey, generateUrl } from "../utils/s3KeyGenerators.js"
-import { deleteByPrefixOnS3, generatePresignedUploadUrl } from "../services/s3Service.js"
+import { deleteByPrefixOnS3, generatePresignedUploadUrl } from "../services/s3.service.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {

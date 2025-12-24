@@ -1,5 +1,5 @@
 import { S3Client } from "@aws-sdk/client-s3";
-import { STSClient, GetSessionTokenCommand } from "@aws-sdk/client-sts";
+import { STSClient} from "@aws-sdk/client-sts";
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env' })
 

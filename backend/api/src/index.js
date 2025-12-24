@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import connectMongoDb from "./config/mongoDb.js";
+import connectMongoDb from "./config/mongoDb.config.js";
 import { app } from './app.js';
 
 dotenv.config({ path: './.env' })

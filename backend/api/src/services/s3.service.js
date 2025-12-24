@@ -1,4 +1,4 @@
-import {s3Client,stsClient} from '../config/s3.js';
+import {s3Client,stsClient} from '../config/s3.config.js';
 import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command, DeleteObjectsCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import fs from 'fs';
