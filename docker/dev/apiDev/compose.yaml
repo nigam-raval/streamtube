@@ -5,7 +5,7 @@ services:
       ports:
         - 127.0.0.1:8001:${PORT}
       volumes:
-        - ../../backend/api:/app/
+        - ../../../backend/api:/app/
       working_dir: /app 
       command: sh -c "npm run dev"
       networks:
@@ -94,7 +94,7 @@ services:
           - socialmedia
       volumes:
         - minio-data:/data
-        - ../../infra/s3/:/polices/
+        - ../../../infra/s3/:/polices/
       command: server /data --console-address ":9001"
       restart: always
       
