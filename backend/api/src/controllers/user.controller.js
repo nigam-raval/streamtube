@@ -404,9 +404,9 @@ const updateUserCoverImage=asyncHandler(async(req,res)=>{
     const {coverFileType}=req.body
     const owner= req?.user?._id
 
-        coverKey= generateUserCoverImageKey(owner,profileFileType)
-        coverUploadUrl= await generatePresignedUploadUrl(coverFileType,coverKey)
-        coverUrl= generateUrl(coverKey)
+        const coverKey= generateUserCoverImageKey(owner,coverFileType)
+        const coverUploadUrl= await generatePresignedUploadUrl(coverFileType,coverKey)
+        const coverUrl= generateUrl(coverKey)
         if(!coverUploadUrl){
             throw new ApiError(500, "something went wrong, coverimage is not upload")
         }
