@@ -21,7 +21,7 @@ const {
       secretAccessKey: STORAGE_SECRET_KEY,
     },
     endpoint: STORAGE_ENDPOINT || undefined,
-    forcePathStyle: String(STORAGE_FORCE_PATH_STYLE).toLowerCase(),
+    forcePathStyle: STORAGE_FORCE_PATH_STYLE
   });
 
   
