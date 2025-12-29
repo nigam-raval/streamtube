@@ -216,7 +216,6 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 const deleteVideo = asyncHandler(async (req, res) => {
     //TODO: delete video
-    const userId=req.user?._id
     const { videoId } = req.params
 
     const video=await Video.findByIdAndDelete(videoId)
