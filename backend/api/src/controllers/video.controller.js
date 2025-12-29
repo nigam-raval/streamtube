@@ -224,7 +224,8 @@ const deleteVideo = asyncHandler(async (req, res) => {
     if(!video){
         throw new ApiError(404,"video not found")
     }
-    const Prefix= `users/${userId}/${videoId}`
+
+    const Prefix= `users/${video.owner}/${videoId}`
 
     await deleteByPrefixOnS3(Prefix)
 
