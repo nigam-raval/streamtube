@@ -6,7 +6,6 @@ public/temp/*
 .prettierignore
 .prettierrc
 compose.yaml
-dockerfile
 readme.md
 policies/*
 apiTestingCollectionsBruno
