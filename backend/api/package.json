@@ -27,6 +27,7 @@
     "@aws-sdk/client-s3": "^3.913.0",
     "@aws-sdk/client-sts": "^3.940.0",
     "@aws-sdk/s3-request-presigner": "^3.913.0",
+    "@casl/ability": "^6.7.5",
     "@prisma/adapter-pg": "^7.0.1",
     "@prisma/client": "^7.0.1",
     "bcrypt": "^6.0.0",

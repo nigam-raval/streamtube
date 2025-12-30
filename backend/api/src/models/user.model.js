@@ -25,6 +25,12 @@ const userSchema= new Schema(
             trim:true,
             index:true
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user",
+            required: true
+        },
         avatar:{
             type:String, //cloud url
             required:true,

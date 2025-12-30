@@ -125,8 +125,6 @@ generated
 frontend
 apiTestingCollections
 compose.dev.yaml
-src/middlewares/ablity.middleware.js
-src/rbac/rbac.js
 
 apiService/eventNotficationCommand.sh
 
