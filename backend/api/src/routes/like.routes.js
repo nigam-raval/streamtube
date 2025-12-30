@@ -10,11 +10,13 @@ const router = Router();
 router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
 
 router.route("/:mediaType/:postId")
-.post(createLike)
-.get(getPostLike);
+    .post(createLike)
+    .get(getPostLike);
 
 router.route("/:likeId")
-.delete(deleteLike);
-
+    .delete(
+        authorizeById({ action: "delete", subject: "Like", Model: Like, param: "likeId" }),
+        deleteLike
+    );
 
 export default router

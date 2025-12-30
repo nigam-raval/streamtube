@@ -12,6 +12,14 @@ const router = Router();
 router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
 
 router.route("/:mediaType/:postId").get(getComments).post(addComment);
-router.route("/:commentId").delete(deleteComment).patch(updateComment);
+router.route("/:commentId")
+    .delete(
+        authorizeById({ action: "delete", subject: "Comment", Model: Comment, param: "commentId" }),
+        deleteComment
+    )
+    .patch(
+        authorizeById({ action: "update", subject: "Comment", Model: Comment, param: "commentId" }),
+        updateComment
+    );
 
 export default router

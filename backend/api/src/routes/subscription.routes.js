@@ -11,12 +11,15 @@ import {verifyJWT} from "../middlewares/authentication.middleware.js"
 const router = Router();
 router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
 
-router.route("/:channelId")
+router.route("/channel/:channelId")
     .post(createSubscription)
     .get(getSubscriptionDetail)
 
-router.route("/:subscriptionId")
-    .delete(deleteSubscription)
+router.route("/subscription/:subscriptionId")
+    .delete(
+        authorizeById({ action: "delete", subject: "Subscription", Model: Subscription, param: "subscriptionId" }),
+        deleteSubscription
+    );
 
 router.route("/SubscribersList/:channelId")
     .get(getUserChannelSubscribersList);// own subscriber

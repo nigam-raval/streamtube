@@ -19,14 +19,26 @@ router.route("/")
 
 router.route("/:playlistId")
     .get(getPlaylistById)
-    .patch(updatePlaylist)
-    .delete(deletePlaylist);
+    .patch(
+        authorizeById({ action: "update", subject: "Playlist", Model: Playlist, param: "playlistId" }),
+        updatePlaylist
+    )
+    .delete(
+        authorizeById({ action: "delete", subject: "Playlist", Model: Playlist, param: "playlistId" }),
+        deletePlaylist
+    );
 
 router.route("/add/:videoId/:playlistId")
-    .patch(addVideoToPlaylist);
+    .patch(
+        authorizeById({ action: "update", subject: "Playlist", Model: Playlist, param: "playlistId" }),
+        addVideoToPlaylist
+    );
 
 router.route("/remove/:videoId/:playlistId")
-    .patch(removeVideoFromPlaylist);
+    .patch(
+        authorizeById({ action: "update", subject: "Playlist", Model: Playlist, param: "playlistId" }),
+        removeVideoFromPlaylist
+    );
 
 router.route("/user/:userId")
     .get(getUserPlaylists);
