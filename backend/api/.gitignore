@@ -122,9 +122,6 @@ dist
 
 public/temp/*
 generated
-frontend
-apiTestingCollections
-compose.dev.yaml
 
-apiService/eventNotficationCommand.sh
+
 

@@ -2,7 +2,6 @@
 node_modules
 tmp
 hls
-docker
 .gitignore
 compose.yaml
-dockerfile
+Dockerfile
