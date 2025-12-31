@@ -16,7 +16,7 @@ import {
     deleteUser,
     generateStsCredentials
 } from "../controllers/user.controller.js";
-
+import { authorizeById } from '../middlewares/authorization.middleware.js';
 
 const router=Router()
 

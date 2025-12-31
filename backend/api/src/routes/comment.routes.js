@@ -6,6 +6,8 @@ import {
     updateComment,
 } from "../controllers/comment.controller.js"
 import {verifyJWT} from "../middlewares/authentication.middleware.js"
+import { authorizeById } from '../middlewares/authorization.middleware.js';
+import { Comment } from '../models/comment.model.js';
 
 const router = Router();
 

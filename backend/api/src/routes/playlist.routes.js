@@ -9,6 +9,9 @@ import {
     updatePlaylist,
 } from "../controllers/playlist.controller.js"
 import {verifyJWT} from "../middlewares/authentication.middleware.js"
+import { authorizeById } from '../middlewares/authorization.middleware.js';
+import { Playlist } from '../models/playlist.model.js';
+
 
 const router = Router();
 

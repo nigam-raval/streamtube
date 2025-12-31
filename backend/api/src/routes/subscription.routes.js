@@ -7,6 +7,8 @@ import {
     getUserChannelSubscribersList,
 } from "../controllers/subscription.controller.js"
 import {verifyJWT} from "../middlewares/authentication.middleware.js"
+import { authorizeById } from '../middlewares/authorization.middleware.js';
+import { Subscription } from '../models/subscription.model.js';
 
 const router = Router();
 router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
