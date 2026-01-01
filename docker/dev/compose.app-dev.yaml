@@ -1,7 +1,7 @@
 services:
     api-node-dev:
       image: node:trixie-slim
-      container_name: api-service-node-dev
+      container_name: app-dev-node
       ports:
         - 127.0.0.1:8001:${PORT}
       volumes:
@@ -9,9 +9,9 @@ services:
       working_dir: /app 
       command: sh -c "npm run dev"
       networks:
-        - socialmedia
+        - streamtube
       user: 1000:1000
 
 networks:
-  socialmedia:
+  streamtube:
    external: true

@@ -9,9 +9,9 @@ services:
       ports:
         - 127.0.0.1:27017:27017
       networks:
-          - socialmedia
+          - streamtube
       volumes:
-        - MongoDB:/data/db
+        - mongodb-data:/data/db
 
     postgres:
       image: postgres:18
@@ -24,7 +24,7 @@ services:
       ports:
         - "127.0.0.1:5432:5432"
       networks:
-          - socialmedia
+          - streamtube
       volumes:
         - pg-data:/var/lib/postgresql
     pgadmin:
@@ -35,11 +35,11 @@ services:
         PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
         PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       networks:
-        - socialmedia
+        - streamtube
       ports:
         - "127.0.0.1:5050:80"
-      # depends_on:
-      #   - postgres
+      depends_on:
+        - postgres
       volumes:
         - pgadmin-data:/var/lib/pgadmin
 
@@ -61,10 +61,10 @@ services:
         - 9000:9000  # HTTP port for MinIO
         - 127.0.0.1:9001:9001  # Port for MinIO Web UI (optional)
       networks:
-          - socialmedia
+          - streamtube
       volumes:
         - minio-data:/data
-        - ../../../infra/s3/:/polices/
+        - ../../infra/s3/:/config/
       command: server /data --console-address ":9001"
       restart: always
       
@@ -77,19 +77,19 @@ services:
             - 5672:5672
             - 127.0.0.1:15672:15672
         networks:
-          - socialmedia
+          - streamtube
         restart: always
 
 
 volumes:
-  MongoDB:
+  mongodb-data:
   minio-data:
   pg-data:
   pgadmin-data:
   rabbitmq-data:
 
 networks:
-  socialmedia:
+  streamtube:
    external: true
 
 

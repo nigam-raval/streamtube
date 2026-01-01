@@ -9,9 +9,9 @@ services:
     ports:
       - 127.0.0.1:27017:27017
     networks:
-        - socialmedia
+        - streamtube
     volumes:
-      - MongoDB:/data/db
+      - mongoDB-data:/data/db
 
   postgres:
     image: postgres:18
@@ -24,7 +24,7 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
     networks:
-        - socialmedia
+        - streamtube
     volumes:
       - pg-data:/var/lib/postgresql
 
@@ -47,11 +47,11 @@ services:
       - 9000:9000  # HTTP port for MinIO
       - 127.0.0.1:9001:9001  # Port for MinIO Web UI (optional)
     networks:
-        - socialmedia
+        - streamtube
     volumes:
       - minio-data:/data
-      - ./infra/s3/sts-socialmedia-readonly-policy.json:/polices/sts-socialmedia-readonly-policy.json
-    command: server /data --console-address ":9001"
+      - ../../infra/s3/:/config
+    command: server /data --console-address ":9001" 
     restart: always
     
   rabbitmq:
@@ -63,18 +63,18 @@ services:
           - 5672:5672
           - 127.0.0.1:15672:15672
       networks:
-        - socialmedia
+        - streamtube
       restart: always
 
 
 volumes:
-  MongoDB:
+  mongodb-data:
   minio-data:
   pg-data:
   rabbitmq-data:
 
 networks:
-  socialmedia:
+  streamtube:
    external: true
 
 
