@@ -5,7 +5,7 @@ dotenv.config({ path: "./.env" });
 
 const {
   STORAGE_ENDPOINT, // internal (docker DNS) or unset for AWS
-  STORAGE__EXTERNAL_ENDPOINT, // external hostname for presigned URLs (localhost for Postman)
+  STORAGE_EXTERNAL_ENDPOINT, // external hostname for presigned URLs (localhost for Postman)
   STORAGE_REGION,
   STORAGE_ACCESS_KEY,
   STORAGE_SECRET_KEY,
@@ -33,7 +33,7 @@ const s3PresignClient = new S3Client({
     accessKeyId: STORAGE_ACCESS_KEY,
     secretAccessKey: STORAGE_SECRET_KEY,
   },
-  endpoint: (STORAGE__EXTERNAL_ENDPOINT || STORAGE_ENDPOINT) || undefined,
+  endpoint: (STORAGE_EXTERNAL_ENDPOINT || STORAGE_ENDPOINT) || undefined,
   forcePathStyle,
 });
 
