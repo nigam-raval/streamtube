@@ -1,6 +1,6 @@
 services:
   streamtube-app:
-    build: ../backend/app
+    build: ./backend/app
     image: streamtube-app
     environment:
       DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
@@ -33,7 +33,7 @@ services:
         - streamtube
 
   video-transcoder-worker:
-      build: ../backend/videoTranscoder
+      build: ./backend/videoTranscoder
       image: video-transcoder
       environment:
         STORAGE_REGION: ${STORAGE_REGION}
@@ -114,20 +114,20 @@ services:
       - 127.0.0.1:9000:9000  # HTTP port for MinIO
       - 127.0.0.1:9001:9001  # Port for MinIO Web UI (optional)
     networks:
-        - streamtube
+      - streamtube
     volumes:
       - minio-data:/data
-      - ../../infra/s3/:/config
+      - ./infra/s3/:/config
     command: server /data --console-address ":9001" 
     restart: always
     
   rabbitmq:
       image: rabbitmq:4-management
       volumes:
-          - rabbitmq-data:/var/lib/rabbitmq 
+        - rabbitmq-data:/var/lib/rabbitmq 
       ports:
-          - 127.0.0.1:5672:5672
-          - 127.0.0.1:15672:15672
+        - 127.0.0.1:5672:5672
+        - 127.0.0.1:15672:15672
       networks:
         - streamtube
       restart: always
