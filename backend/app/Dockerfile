@@ -8,4 +8,4 @@ RUN npm install --production
 
 COPY . .
 
-CMD ["sh", "-c", "npx prisma generate && npm start"]
+CMD ["sh", "-c", "npx prisma generate && npx prisma db push && npm start"]
