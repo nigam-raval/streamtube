@@ -1,5 +1,8 @@
 services:
     node:
+      build:
+        context: ../../
+        dockerfile: docker/dev/Dockerfile.ffmpeg
       image: ffmpeg-node
       container_name: node-video-processor-dev-node
       volumes:
@@ -10,6 +13,15 @@ services:
       tty: true
       networks:
         - streamtube
+      command: > # Simple Restart Loop (to use same video-transcoder container for mutiple jobs)
+        sh -c "
+          while true; do 
+            echo 'Worker checking for jobs';
+            npm start;
+            echo 'Done or Empty. Sleeping 5s';
+            sleep 5;
+          done
+        "
       # deploy:
       #     resources:
       #       limits:

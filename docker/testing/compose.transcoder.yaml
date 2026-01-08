@@ -15,6 +15,15 @@ services:
         RABBIT_URL: ${RABBIT_URL}
       networks:
         - streamtube # needed for connecting with S3(minio)
+      command: > # Simple Restart Loop (Simulates KEDA locally)
+        sh -c "
+          while true; do 
+            echo 'Worker checking for jobs';
+            npm start;
+            echo 'Done or Empty. Sleeping 5s';
+            sleep 5;
+          done
+        "
       # deploy:
       #     resources:
       #       limits:
