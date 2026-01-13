@@ -2,3 +2,4 @@ frontend
 apiTestingCollections
 .env
 infra/k8s/videoTranscoder/deployment.yaml
+.env.k8s

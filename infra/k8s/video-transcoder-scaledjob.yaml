@@ -1,0 +1,47 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: video-transcoder
+  labels:
+    part-of: streamtube
+    component: worker
+spec:
+  pollingInterval: 2  #sec         
+  maxReplicaCount: 10  #parallel videos
+  successfulJobsHistoryLimit: 0 # Clean up success immediately
+  failedJobsHistoryLimit: 3  # Keep 3 failures for debugging
+
+  triggers:
+    - type: rabbitmq
+      metadata:
+        protocol: amqp
+        host: amqp://host.minikube.internal:5672
+        queueName: s3-events
+        mode: QueueLength
+        value: "1"  # 1 message = 1 worker pod
+
+  jobTargetRef:
+    parallelism: 1
+    completions: 1
+    backoffLimit: 1
+    template:
+      metadata:
+        labels:
+          part-of: streamtube
+          component: worker     
+      spec:
+        restartPolicy: Never
+        containers:
+          - name: video-transcoder
+            image: streamtube-video-transcoder
+            imagePullPolicy: Never 
+            resources:
+              requests:
+                memory: "512Mi"  
+                cpu: "500m"
+              limits:
+                memory: "2Gi"
+                cpu: "2000m"
+            envFrom:
+              - secretRef:
+                  name: streamtube-secrets

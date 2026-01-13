@@ -74,7 +74,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - 127.0.0.1:27017:27017
+      - 27017:27017
     networks:
         - streamtube
     volumes:
@@ -88,7 +88,7 @@ services:
       POSTGRES_PASSWORD: ${PGPASSWORD}
       POSTGRES_DB: ${PGDATABASE}
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     networks:
         - streamtube
     volumes:
@@ -111,7 +111,7 @@ services:
     depends_on:
       - rabbitmq
     ports:
-      - 127.0.0.1:9000:9000  # HTTP port for MinIO
+      - 9000:9000  # HTTP port for MinIO
       - 127.0.0.1:9001:9001  # Port for MinIO Web UI (optional)
     networks:
       - streamtube
@@ -126,7 +126,7 @@ services:
       volumes:
         - rabbitmq-data:/var/lib/rabbitmq 
       ports:
-        - 127.0.0.1:5672:5672
+        - 5672:5672
         - 127.0.0.1:15672:15672
       networks:
         - streamtube
