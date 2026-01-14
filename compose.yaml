@@ -125,12 +125,35 @@ services:
       image: rabbitmq:4-management
       volumes:
         - rabbitmq-data:/var/lib/rabbitmq 
+      environment:
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
       ports:
         - 5672:5672
         - 127.0.0.1:15672:15672
       networks:
         - streamtube
+      healthcheck:
+        test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
       restart: always
+
+  rabbitmq-init:
+      image: rabbitmq:4-management
+      networks:
+        - streamtube
+      depends_on:
+        rabbitmq:
+          condition: service_healthy
+      environment:
+        # Use the SAME standard variable names here
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+      volumes:
+        - ./infra/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
+      entrypoint: ["/bin/sh", "/usr/local/bin/init.sh"]
 
 
 volumes:
