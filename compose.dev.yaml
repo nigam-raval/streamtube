@@ -34,7 +34,7 @@ services:
       # container alive and polling for new work.  
       command: >
         sh -c "  
-          while true; do 
+          while true; do
             echo 'Worker checking for jobs';
             npm start;
             echo 'Done or Empty. Sleeping 5s';
@@ -117,14 +117,36 @@ services:
     rabbitmq:
         image: rabbitmq:4-management
         volumes:
-          - rabbitmq-dev-data:/var/lib/rabbitmq  
+          - rabbitmq-dev-data:/var/lib/rabbitmq 
+        environment:
+          RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+          RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
         ports:
-            - 127.0.0.1:5672:5672
-            - 127.0.0.1:15672:15672
+          - 127.0.0.1:5672:5672
+          - 127.0.0.1:15672:15672
         networks:
           - streamtube-dev
+        healthcheck:
+          test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+          interval: 5s
+          timeout: 5s
+          retries: 5
         restart: always
 
+    rabbitmq-init:
+        image: rabbitmq:4-management
+        networks:
+          - streamtube
+        depends_on:
+          rabbitmq:
+            condition: service_healthy
+        environment:
+          # Use the SAME standard variable names here
+          RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+          RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+        volumes:
+          - ./infra/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
+        entrypoint: ["/bin/sh", "/usr/local/bin/init.sh"]
 
 volumes:
   mongodb-dev-data:
