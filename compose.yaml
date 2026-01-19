@@ -117,9 +117,32 @@ services:
       - streamtube
     volumes:
       - minio-data:/data
-      - ./infra/s3/:/config
     command: server /data --console-address ":9001" 
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  bucket-storage-init:
+    image: minio/minio:latest
+    depends_on:
+      bucket-storage:
+        condition: service_healthy
+    environment:
+      MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${STORAGE_SECRET_KEY}
+      STORAGE_STS_USER: ${STORAGE_STS_USER}
+      STORAGE_STS_PASSWORD: ${STORAGE_STS_PASSWORD}
+      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
+    volumes:
+      - ./infra/s3/:/setup
+    networks:
+      - streamtube
+    entrypoint: ["/bin/sh", "/setup/init.sh"]
+    
+
     
   rabbitmq:
       image: rabbitmq:4-management
