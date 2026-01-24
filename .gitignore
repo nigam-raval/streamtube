@@ -1,4 +1,4 @@
 frontend
 apiTestingCollections
 .env
-.env.k8s
+infra/k8s/.env.k8s
