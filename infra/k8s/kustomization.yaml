@@ -6,6 +6,7 @@ resources:
   - video-transcoder-scaledjob.yaml
   - rabbitmq.yaml
   - minio.yaml
+  - postgres.yaml
 
 configMapGenerator:
   - name: rabbitmq-init-script
