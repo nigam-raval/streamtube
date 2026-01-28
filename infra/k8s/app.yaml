@@ -1,10 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: streamtube-app
+spec:
+  type: ClusterIP      
+  selector:
+    part-of: streamtube   
+    component: app
+  ports:
+    - port: 8001           
+      targetPort: 8001
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: streamtube-app
-  labels:
-    part-of: streamtube
-    component: apps
 spec:
   replicas: 1
   selector:
@@ -35,21 +47,3 @@ spec:
           envFrom:
             - secretRef:
                 name: streamtube-secrets
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: streamtube-app
-  labels:
-    part-of: streamtube
-    component: app
-spec:
-  type: LoadBalancer        
-  selector:
-    part-of: streamtube   
-    component: app
-  ports:
-    - port: 8001           
-      targetPort: 8001
