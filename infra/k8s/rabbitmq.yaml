@@ -55,19 +55,20 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
-          livenessProbe:
-            exec:
-              command: ["rabbitmq-diagnostics", "-q", "ping"]
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            timeoutSeconds: 15
-            failureThreshold: 3
           readinessProbe:
             exec:
               command: ["rabbitmq-diagnostics", "-q", "ping"]
-            initialDelaySeconds: 20
+            initialDelaySeconds: 15
             periodSeconds: 10
-            timeoutSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command: ["rabbitmq-diagnostics", "-q", "ping"]
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 5
           volumeMounts:
             - name: rabbitmq-data
               mountPath: /var/lib/rabbitmq

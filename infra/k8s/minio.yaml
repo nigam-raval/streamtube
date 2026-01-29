@@ -87,12 +87,23 @@ spec:
           ports:
             - containerPort: 9000
             - containerPort: 9001
+
           readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: 9000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 3
+            
+          livenessProbe:
             httpGet:
               path: /minio/health/live
               port: 9000
-            initialDelaySeconds: 5
-            periodSeconds: 5
+            initialDelaySeconds: 40
+            periodSeconds: 20
+            failureThreshold: 5
+
           volumeMounts:
             - name: minio-data
               mountPath: /data

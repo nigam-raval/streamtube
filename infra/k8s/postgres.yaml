@@ -36,18 +36,32 @@ spec:
             secretKeyRef:
               name: streamtube-secrets
               key: PGUSER
-
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
               name: streamtube-secrets
               key: PGDATABASE
-
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: streamtube-secrets
               key: PGPASSWORD
+
+        readinessProbe:
+            exec:
+              command: ["/bin/sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+        livenessProbe:
+            exec:
+              command: ["/bin/sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 5
 
         volumeMounts:
         - name: postgres-data

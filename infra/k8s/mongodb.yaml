@@ -41,6 +41,28 @@ spec:
             secretKeyRef:
               name: streamtube-secrets
               key: DB_ROOT_PASSWORD
+        - name: AUTH_SOURCE
+          valueFrom:
+            secretKeyRef:
+              name: streamtube-secrets
+              key: AUTH_SOURCE
+
+        readinessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "mongosh --quiet -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase $AUTH_SOURCE --eval 'db.adminCommand(\"ping\").ok'"]
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+
+        livenessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "mongosh --quiet -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase $AUTH_SOURCE --eval 'db.adminCommand(\"ping\").ok'"]
+          initialDelaySeconds: 20
+          periodSeconds: 20
+          timeoutSeconds: 5
+          failureThreshold: 5
+
         volumeMounts:
         - name: mongodb-data
           mountPath: /data/db
