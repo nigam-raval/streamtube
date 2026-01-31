@@ -44,6 +44,25 @@ spec:
               memory: "2Gi"
               cpu: "4000m"
 
+          readinessProbe:
+            httpGet:
+              path: /api/v1/healthcheck
+              port: 8001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+
+          livenessProbe:
+            httpGet:
+              path: /api/v1/healthcheck
+              port: 8001
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 5
+
           envFrom:
             - secretRef:
                 name: streamtube-secrets
