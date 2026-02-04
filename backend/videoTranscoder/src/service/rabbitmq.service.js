@@ -2,8 +2,8 @@ import amqp from "amqplib";
 import dotenv from "dotenv";
 dotenv.config()
 
-const RABBIT_QUEUE = process.env.RABBIT_QUEUE
-const RABBIT_URL = process.env.RABBIT_URL
+const RABBITMQ_QUEUE = process.env.RABBITMQ_QUEUE
+const RABBITMQ_URL = process.env.RABBITMQ_URL
 
 
 export async function fetchOneRabbitmqMessage() {
@@ -12,15 +12,15 @@ export async function fetchOneRabbitmqMessage() {
 
   try {
     console.log("rabbitmq service started 1")
-    connection = await amqp.connect(RABBIT_URL);
+    connection = await amqp.connect(RABBITMQ_URL);
     channel = await connection.createChannel();
     console.log("rabbitmq service started 2")
-    await channel.assertQueue(RABBIT_QUEUE, { durable: true });
+    await channel.assertQueue(RABBITMQ_QUEUE, { durable: true });
 
     console.log("[*] Waiting for one message...");
 
     // Get a single message (no consumer loop)
-    const msg = await channel.get(RABBIT_QUEUE, { noAck: false });
+    const msg = await channel.get(RABBITMQ_QUEUE, { noAck: false });
 
     if (!msg) {
       console.log("[!] No message in queue");

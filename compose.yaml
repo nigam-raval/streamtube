@@ -52,8 +52,8 @@ services:
         STORAGE_ENDPOINT: ${STORAGE_ENDPOINT} 
         STORAGE_FORCE_PATH_STYLE: ${STORAGE_FORCE_PATH_STYLE} # # For AWS,STORAGE_FORCE_PATH_STYLE: false
         # RabbitMQ
-        RABBIT_QUEUE: ${RABBIT_QUEUE}
-        RABBIT_URL: ${RABBIT_URL}
+        RABBITMQ_QUEUE: ${RABBITMQ_QUEUE}
+        RABBITMQ_URL: ${RABBITMQ_URL}
       depends_on:
         bucket-storage:
           condition: service_healthy
