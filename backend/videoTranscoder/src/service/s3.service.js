@@ -5,7 +5,7 @@ import { pipeline } from "stream/promises";
 import dotenv from "dotenv";
 import { s3 } from "../config/s3.config.js";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 
 

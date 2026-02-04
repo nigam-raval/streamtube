@@ -1,6 +1,6 @@
 import amqp from "amqplib";
 import dotenv from "dotenv";
-dotenv.config()
+dotenv.config({ quiet: true });
 
 const RABBITMQ_QUEUE = process.env.RABBITMQ_QUEUE
 const RABBITMQ_URL = process.env.RABBITMQ_URL
