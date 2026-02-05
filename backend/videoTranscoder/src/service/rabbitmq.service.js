@@ -11,19 +11,18 @@ export async function fetchOneRabbitmqMessage() {
   let channel;
 
   try {
-    console.log("rabbitmq service started 1")
+    console.log("rabbitmq service started")
     connection = await amqp.connect(RABBITMQ_URL);
     channel = await connection.createChannel();
-    console.log("rabbitmq service started 2")
     await channel.assertQueue(RABBITMQ_QUEUE, { durable: true });
 
-    console.log("[*] Waiting for one message...");
+    console.log("Waiting for one message");
 
     // Get a single message (no consumer loop)
     const msg = await channel.get(RABBITMQ_QUEUE, { noAck: false });
 
     if (!msg) {
-      console.log("[!] No message in queue");
+      console.log("! No message in queue");
       await channel.close();
       await connection.close();
       process.exit(0);

@@ -10,8 +10,6 @@ const {
     STORAGE_SECRET_KEY,
     STORAGE_FORCE_PATH_STYLE,
   } = process.env;
-
-  console.log(STORAGE_ENDPOINT)
   
   export const s3 = new S3Client({
     region: STORAGE_REGION,
