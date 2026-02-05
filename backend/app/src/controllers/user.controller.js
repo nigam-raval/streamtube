@@ -10,19 +10,10 @@ import prisma from "../config/postgres.config.js";
 import { console } from "inspector";
 
 
-
 const cookieOptions={
     httpOnly: true,
     secure: true
 }
-
-const generateStsCredentials=asyncHandler(async (req,res) => {
-    const response= await stsOnS3()
-
-    res
-    .status(200)
-    .json(new ApiResponse(200,{response},"sts credentials generated succesfully"))
-})
 
 const generateAccessAndRefreshToken=async(userId)=>{
     try {
@@ -203,12 +194,14 @@ const loginUser=asyncHandler(async (req,res)=>{
         }
     )
 
+    const StsCredentials= await stsOnS3()
+
     const response={
         ...loggedInUser._doc,
         balance: userBalance.balance,
         accessToken,
-        refreshToken
-        
+        refreshToken,
+        StsCredentials
     }
     
     //send res with cokkie
@@ -216,6 +209,7 @@ const loginUser=asyncHandler(async (req,res)=>{
     .status(200)
     .cookie("accessToken",accessToken,cookieOptions)
     .cookie("refreshToken",refreshToken,cookieOptions)
+    .cookie("StsCredentials",StsCredentials,cookieOptions)
     .json(new ApiResponse(200,{response},"User logged in successfully"))
 
 
@@ -234,6 +228,7 @@ const logoutUser=asyncHandler(async(req,res)=>{
     .status(200)
     .clearCookie("accessToken",cookieOptions)
     .clearCookie("refreshToken",cookieOptions)
+    .clearCookie("StsCredentials",cookieOptions)
     .json(new ApiResponse(200,{},"user logged out "))
 })
 
@@ -282,6 +277,15 @@ const refreshToken=asyncHandler(async(req,res)=>{
     
 
 
+})
+
+const generateStsCredentials=asyncHandler(async (req,res) => {
+    const StsCredentials= await stsOnS3()
+
+    res
+    .status(200)
+    .cookie("StsCredentials",StsCredentials,cookieOptions)
+    .json(new ApiResponse(200,{StsCredentials},"sts credentials generated succesfully"))
 })
 
 const changeCurrentPassword=asyncHandler(async(req,res)=>{
