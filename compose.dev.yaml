@@ -6,8 +6,9 @@ services:
       volumes:
         - ./backend/app:/app/
         - ./.env:/app/.env
-      working_dir: /app 
-      command: sh -c "npm run dev"
+      working_dir: /app
+      stdin_open: true
+      tty: true
       depends_on:
         mongodb:
           condition: service_healthy
@@ -15,13 +16,6 @@ services:
           condition: service_healthy
         bucket-storage:
           condition: service_healthy
-      healthcheck:
-        test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8001/api/v1/healthcheck').then(res => process.exit(res.ok ? 0 : 1))"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-        start_period: 10s
-
       networks:
         - streamtube-dev
       user: 1000:1000
