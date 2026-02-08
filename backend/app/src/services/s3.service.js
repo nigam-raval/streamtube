@@ -47,7 +47,7 @@ const generatePresignedDownloadUrl= async function (Key,time="300") {
 
 const generatePresignedUploadUrl= async function(ContentType,ContentLength,ChecksumSHA256,Key, time="300"){
   try {
-    console.log("Content-Type being signed:", ContentType);
+
         const command = new PutObjectCommand({
             Bucket: process.env.STORAGE_BUCKET,
             Key: Key,
@@ -94,7 +94,7 @@ const listObjectsByPrefixOnS3= async function(Prefix){
     }))
 
     if (list.KeyCount==0) {
-      console.log("No objects found.");
+
 
     }
     

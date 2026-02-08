@@ -29,7 +29,6 @@ export async function uploadDirectoryToS3(localDir, s3Prefix) {
   for (const file of files) {
     const filePath = join(localDir, file);
     const key = join(s3Prefix, file).replace(/\\/g, "/"); // Fix Windows path issue
-    console.log(`Uploading ${file} to S3 as ${key}...`);
     const fileContent = readFileSync(filePath);
     await s3.send(new PutObjectCommand({ Bucket: STORAGE_BUCKET, Key: key, Body: fileContent }));
   }

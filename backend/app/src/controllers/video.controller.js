@@ -13,7 +13,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
     //it can use default feed and search and also search inside channel
 
     const {query,channelId, sortBy="createdAt", sortType="desc", page = 1, limit = 10 } = req.query
-    console.log(query)
     const queryObject={}
     
     if (channelId) {
@@ -155,7 +154,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
 
 
-    console.log(video)
+
     return res
     .status(200)
     .json(new ApiResponse(200,{video,videoUploadUrl,thumbnailUploadUrl},"video is published"))
@@ -281,7 +280,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
         [{$set:{isPublished:{$not:"$isPublished"}}}],
         {new:true}
     )
-    console.log(video)
+
     
     return res
     .status(200)

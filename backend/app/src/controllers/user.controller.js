@@ -127,7 +127,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
 
     const avatarKey= generateUserProfileImageKey(user._id,avatarContentType)
     const avatarUrl= generateUrl(avatarKey)
-    console.log(avatarContentType)
+
     const avatarUploadUrl = await generatePresignedUploadUrl(avatarContentType,avatarContentLength,avatarChecksumSHA256,avatarKey)
     
     if(!avatarUploadUrl){
@@ -194,7 +194,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
 const loginUser=asyncHandler(async (req,res)=>{
     
     // take username/email and password from req.body(front-end)
-    console.log(req.body)
+
     const{identifier,password}=req.body
     
     //validation:- check fields are non empty
@@ -251,14 +251,10 @@ const loginUser=asyncHandler(async (req,res)=>{
 })
 
 const logoutUser=asyncHandler(async(req,res)=>{
-
-    const userBefore = await User.findById(req.user._id);
-    console.log('Current refreshToken:', userBefore.refreshToken);
-
-    const updatedUser=await User.findByIdAndUpdate(req.user._id,{$unset:{refreshToken:1}},{new:true})
     
-    console.log('Updated refreshToken:', updatedUser.refreshToken);
-
+    
+    await User.findByIdAndUpdate(req.user._id,{$unset:{refreshToken:1}},{new:true})
+    
     return res
     .status(200)
     .clearCookie("accessToken",cookieOptions)
@@ -501,7 +497,6 @@ const deleteUser= asyncHandler(async (req,res)=>{
     if(!user){
         throw new ApiError(404,"user not found")
     }
-    console.log(userId)
 
     const userBalance = await prisma.user.delete(
         {
@@ -585,7 +580,6 @@ const getUserChannelProfile= asyncHandler(async(req,res)=>{
  
     ])
     
-    console.log(channel)//testing
     
     if(!channel.length){
         throw new ApiError(404,"channel does not exist")
