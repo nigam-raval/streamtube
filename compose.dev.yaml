@@ -57,7 +57,7 @@ services:
       #         memory: 10G    # Allocating 8GB of memory
 
     mongodb:
-      image: mongo
+      image: mongo:8.2
       restart: always
       environment:
         MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
@@ -76,7 +76,7 @@ services:
         start_period: 5s
 
     postgres:
-      image: postgres:18
+      image: postgres:18.1
       restart: always
       environment:
         POSTGRES_USER: ${PGUSER}
@@ -161,7 +161,7 @@ services:
   
       
     rabbitmq:
-        image: rabbitmq:4-management
+        image: rabbitmq:4.2-management
         volumes:
           - rabbitmq-dev-data:/var/lib/rabbitmq 
         environment:
@@ -180,7 +180,7 @@ services:
         restart: always
 
     rabbitmq-init:
-        image: rabbitmq:4-management
+        image: rabbitmq:4.2-management
         networks:
           - streamtube-dev
         depends_on:
