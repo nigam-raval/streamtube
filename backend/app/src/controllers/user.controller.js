@@ -138,7 +138,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
     
 
     let coverUploadUrl,coverKey,coverUrl;
-    if(coverContentType!= " "){
+    if(coverContentLength){
         coverKey= generateUserCoverImageKey(user._id,coverContentType)
         coverUploadUrl= await generatePresignedUploadUrl(coverContentType,coverContentLength,coverChecksumSHA256,coverKey)
         coverUrl= generateUrl(coverKey)
