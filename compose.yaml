@@ -57,6 +57,8 @@ services:
       depends_on:
         bucket-storage:
           condition: service_healthy
+        rabbitmq:
+          condition: service_healthy
       networks:
         - streamtube
       # DEV ONLY: Simulate KEDA behavior.
@@ -96,7 +98,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 5s
+      start_period: 10s
 
   postgres:
     image: postgres:18.1
@@ -116,6 +118,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
 
   bucket-storage:
@@ -148,6 +151,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
   
   bucket-storage-init:
     image: minio/mc:latest
@@ -183,9 +187,10 @@ services:
         - streamtube
       healthcheck:
         test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
-        interval: 5s
+        interval: 10s
         timeout: 5s
         retries: 5
+        start_period: 10s
       restart: always
 
   rabbitmq-init:

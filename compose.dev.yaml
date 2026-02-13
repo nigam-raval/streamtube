@@ -33,6 +33,8 @@ services:
       depends_on:
         bucket-storage:
           condition: service_healthy
+        rabbitmq:
+          condition: service_healthy
       stdin_open: true
       tty: true
       networks:
@@ -73,7 +75,7 @@ services:
         interval: 10s
         timeout: 5s
         retries: 5
-        start_period: 5s
+        start_period: 10s
 
     postgres:
       image: postgres:18.1
@@ -93,22 +95,7 @@ services:
         interval: 10s
         timeout: 5s
         retries: 5
-
-    pgadmin:
-      image: dpage/pgadmin4:latest
-      restart: always
-      environment:
-        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      networks:
-        - streamtube-dev
-      ports:
-        - "127.0.0.1:5050:80"
-      depends_on:
-        postgres:
-          condition: service_healthy
-      volumes:
-        - pgadmin-dev-data:/var/lib/pgadmin
+        start_period: 10s
 
     bucket-storage:
       image: minio/minio:latest
@@ -140,6 +127,7 @@ services:
         interval: 5s
         timeout: 5s
         retries: 5
+        start_period: 10s
 
     bucket-storage-init:
       image: minio/minio:latest
@@ -177,6 +165,7 @@ services:
           interval: 5s
           timeout: 5s
           retries: 5
+          start_period: 10s
         restart: always
 
     rabbitmq-init:
@@ -194,6 +183,21 @@ services:
         volumes:
           - ./infra/k8s/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
         entrypoint: ["/bin/sh", "/usr/local/bin/init.sh"]
+    pgadmin:
+      image: dpage/pgadmin4:latest
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      networks:
+        - streamtube-dev
+      ports:
+        - "127.0.0.1:5050:80"
+      depends_on:
+        postgres:
+          condition: service_healthy
+      volumes:
+        - pgadmin-dev-data:/var/lib/pgadmin
 
 volumes:
   mongodb-dev-data:
