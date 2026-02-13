@@ -635,6 +635,12 @@ const getWatchHistory =asyncHandler(async(req,res)=>{
                     $first:"$owner"
                 }
             }
+        },
+                {
+            $project: {
+                password: 0,
+                refreshToken: 0
+            }
         }
         
     ])
