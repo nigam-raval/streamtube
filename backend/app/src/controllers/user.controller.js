@@ -11,8 +11,8 @@ import validator from 'validator';
 
 
 const cookieOptions={
-    httpOnly: true,
-    secure: true
+    httpOnly: process.env.COOKIE_OPTION_HTTPONLY,
+    secure: process.env.COOKIE_OPTION_SECURE
 }
 
 const generateAccessAndRefreshToken=async(userId)=>{
