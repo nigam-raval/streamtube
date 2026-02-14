@@ -3,7 +3,7 @@ import {Video} from "../models/video.model.js"
 import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
-import { generateThumbnailKey, generateTempVideoKey, generateUrl } from "../utils/s3KeyGenerators.js"
+import { generateThumbnailKey, generateTempVideoKey, generateVideoKey,generateUrl } from "../utils/s3KeyGenerators.js"
 import { deleteByPrefixOnS3, generatePresignedUploadUrl } from "../services/s3.service.js"
 import validator from 'validator';
 
@@ -133,17 +133,19 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     
     const videoKey= generateTempVideoKey(owner,video._id,videoContentType)
-    const videoUrl= generateUrl(videoKey)
     const videoUploadUrl= await generatePresignedUploadUrl(videoContentType,videoContentLength,videoChecksumSHA256,videoKey)
 
     if(!videoUploadUrl){
         throw new ApiError(500,"something went wrong, video upload presigned url is not genreated ")
     }
 
+    const transcodedVideokey= generateVideoKey(owner,video._id) + "master_video.m3u8"
+    const transcodedVideoUrl= generateUrl(transcodedVideokey)
+
     video=await Video.findByIdAndUpdate(
         video._id,
         {
-            video:videoUrl,
+            video:transcodedVideoUrl,
             thumbnail:thumbnailUrl
             
         },
