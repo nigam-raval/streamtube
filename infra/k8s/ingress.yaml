@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: streamtube-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "50g"
 spec:
   ingressClassName: nginx
   rules:
