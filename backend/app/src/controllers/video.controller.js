@@ -117,7 +117,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     const VIDEO_MAX_IMAGE_SIZE = 5 * 1024 * 1024 * 1024; // 5GB
     if (videoContentLength > VIDEO_MAX_IMAGE_SIZE) {
-        throw new ApiError(400, "VIDEO image should not be more than 10MB");
+        throw new ApiError(400, `VIDEO image should not be more than ${VIDEO_MAX_IMAGE_SIZE}`);
     }
 
     if (!validator.isHash(videoChecksumSHA256, 'sha256')) {
