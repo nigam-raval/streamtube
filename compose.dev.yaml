@@ -1,12 +1,12 @@
 services:
     app-dev:
-      image: node:trixie-slim
+      image: node:25
       ports:
         - 127.0.0.1:8001:${PORT}
       volumes:
-        - ./backend/app:/app/
-        - ./.env:/app/.env
-      working_dir: /app
+        - ./backend/app:/workspace/
+        - ./.env:/workspace/.env
+      working_dir: /workspace
       stdin_open: true
       tty: true
       depends_on:
@@ -18,7 +18,7 @@ services:
           condition: service_healthy
       networks:
         - streamtube-dev
-      user: 1000:1000
+
 
     video-transcoder-worker-dev:
       build:
@@ -26,10 +26,9 @@ services:
         dockerfile: Dockerfile.ffmpeg
       image: ffmpeg-node
       volumes:
-        - ./backend/videoTranscoder:/app/
-        - ./.env:/app/.env
-      working_dir: /app
-      user: 1000:1000
+        - ./backend/videoTranscoder:/workspace/
+        - ./.env:/workspace/.env
+      working_dir: /workspace
       depends_on:
         bucket-storage:
           condition: service_healthy
