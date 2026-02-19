@@ -119,5 +119,7 @@ dist
 
 # End 
 
-
 tmp
+
+# pnpm
+.pnpm-store

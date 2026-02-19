@@ -123,5 +123,8 @@ dist
 public/temp/*
 generated
 
+# pnpm
+.pnpm-store
+
 
 
