@@ -38,14 +38,6 @@ app.use("/api/v1/playlist", playlistRouter)
 app.use("/api/v1/dashboard", dashboardRouter)
 app.use("/api/v1/transaction", transactionRouter)
 
-// // Serve static files from the 'frontend' directory
-// app.use(express.static(path.join(path.resolve(), 'frontend')));
-
-// // Define the main route
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(path.resolve(), 'frontend', 'index.html'));
-// });
-
 
 
 export { app }
