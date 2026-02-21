@@ -1,5 +1,3 @@
-# DEVELOPMENT ONLY Dockerfile
-
 FROM node:25
 
 RUN apt update && apt install -y ffmpeg bash && rm -rf /var/lib/apt/lists/*

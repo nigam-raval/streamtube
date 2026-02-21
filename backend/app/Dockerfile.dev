@@ -1,0 +1,5 @@
+FROM node:25
+
+WORKDIR /workspace
+
+CMD ["bash"]

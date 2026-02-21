@@ -1,6 +1,9 @@
 services:
     app-dev:
-      image: node:25
+      build:
+        context: ./
+        dockerfile: ./backend/app/Dockerfile
+      image: app-dev-node
       ports:
         - 127.0.0.1:8001:${PORT}
       volumes:
@@ -22,8 +25,8 @@ services:
     video-transcoder-worker-dev:
       build:
         context: ./
-        dockerfile: backend/videoTranscoder/Dockerfile.ffmpeg
-      image: ffmpeg-node
+        dockerfile: backend/videoTranscoder/Dockerfile.dev
+      image: video-transcoder-worker-dev-node
       volumes:
         - ./:/workspace/
       working_dir: /workspace/backend/videoTranscoder
