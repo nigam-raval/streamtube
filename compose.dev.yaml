@@ -4,9 +4,8 @@ services:
       ports:
         - 127.0.0.1:8001:${PORT}
       volumes:
-        - ./backend/app:/workspace/
-        - ./.env:/workspace/.env
-      working_dir: /workspace
+        - ./:/workspace/
+      working_dir: /workspace/backend/app
       stdin_open: true
       tty: true
       depends_on:
@@ -22,13 +21,12 @@ services:
 
     video-transcoder-worker-dev:
       build:
-        context: ./backend/videoTranscoder
-        dockerfile: Dockerfile.ffmpeg
+        context: ./
+        dockerfile: backend/videoTranscoder/Dockerfile.ffmpeg
       image: ffmpeg-node
       volumes:
-        - ./backend/videoTranscoder:/workspace/
-        - ./.env:/workspace/.env
-      working_dir: /workspace
+        - ./:/workspace/
+      working_dir: /workspace/backend/videoTranscoder
       depends_on:
         bucket-storage:
           condition: service_healthy
@@ -54,8 +52,8 @@ services:
       # deploy:
       #     resources:
       #       limits:
-      #         cpus: '8.0'  # Allocating 4 logical CPUs
-      #         memory: 10G    # Allocating 8GB of memory
+      #         cpus: '8.0'  # Allocating logical CPUs
+      #         memory: 10G    # Allocating memory
 
     mongodb:
       image: mongo:8.2

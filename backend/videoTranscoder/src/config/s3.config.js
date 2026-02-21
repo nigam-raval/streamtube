@@ -1,6 +1,6 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env', quiet: true })
+dotenv.config({path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
 
 // AWS S3 or minIO
 const {

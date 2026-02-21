@@ -1,6 +1,8 @@
 services:
   streamtube-app:
-    build: ./backend/app
+    build:
+      context: ./
+      dockerfile: ./backend/app/Dockerfile
     image: streamtube-app
     environment:
       DB_ROOT_USERNAME: ${DB_ROOT_USERNAME}
@@ -42,7 +44,9 @@ services:
       start_period: 10s
 
   video-transcoder-worker:
-      build: ./backend/videoTranscoder
+      build:
+        context: ./
+        dockerfile: ./backend/videoTranscoder/Dockerfile
       image: video-transcoder
       environment:
         STORAGE_REGION: ${STORAGE_REGION}

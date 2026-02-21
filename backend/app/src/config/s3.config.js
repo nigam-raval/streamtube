@@ -1,7 +1,8 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { STSClient } from "@aws-sdk/client-sts";
 import dotenv from "dotenv";
-dotenv.config({ path: "./.env", quiet: true });
+
+dotenv.config({ path: '../../.env', quiet: true }); // '../../.env' is relative to process.cwd(), not this file
 
 const {
   STORAGE_ENDPOINT, // internal (docker DNS) or unset for AWS

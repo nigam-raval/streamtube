@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { getExtensionFromMime } from './mime.js';
-dotenv.config({ path: './.env',quiet: true })
+dotenv.config({path: '../../.env',quiet: true }) // '../../.env' is relative to process.cwd(), not this file
 
 
 

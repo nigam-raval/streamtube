@@ -5,7 +5,7 @@ import prisma from './config/postgres.config.js';
 import {s3Client} from './config/s3.config.js';
 import { HeadBucketCommand } from "@aws-sdk/client-s3";
 
-dotenv.config({ path: './.env', quiet: true })
+dotenv.config({ path: '../../.env', quiet: true}); // '../../.env' is relative to process.cwd(), not this file
 
 
 const startServer = async () => {
