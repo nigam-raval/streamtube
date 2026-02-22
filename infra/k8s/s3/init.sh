@@ -7,7 +7,7 @@ echo "Waiting for bucket-storage"
 
 # > /dev/null : Sends success output to trash
 # 2>&1 : Sends errors to trash too
-# slient waiting loop
+# silent waiting loop
 until $CMD > /dev/null 2>&1; do
   echo "MinIO not ready. Retrying in 2s..."
   sleep 2
@@ -27,7 +27,7 @@ mc admin policy create myminio stsuserpolicy /setup/sts-streamtube-readonly-poli
 # attach policy to second user
 mc admin policy attach myminio stsuserpolicy --user stsuser
 
-# configure minio for event notfication
+# configure minio for event notification
 mc event add myminio/streamtube arn:minio:sqs::rabbitmq1:amqp --event put --prefix private/ 2> /dev/null || echo "Event notification already exists(skipping command)"
 
 echo "bucket-storage init setup complete"

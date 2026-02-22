@@ -103,7 +103,7 @@ services:
       environment:
         MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY}
         MINIO_ROOT_PASSWORD: ${STORAGE_SECRET_KEY}
-        # for event notfication
+        # for event notification
         MINIO_NOTIFY_AMQP_ENABLE_rabbitmq1: ${MINIO_NOTIFY_AMQP_ENABLE_rabbitmq1}
         MINIO_NOTIFY_AMQP_URL_rabbitmq1: ${MINIO_NOTIFY_AMQP_URL_rabbitmq1}
         MINIO_NOTIFY_AMQP_EXCHANGE_rabbitmq1: ${MINIO_NOTIFY_AMQP_EXCHANGE_rabbitmq1}

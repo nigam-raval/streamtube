@@ -56,7 +56,7 @@ const deleteSubscription = asyncHandler(async (req, res) => {
 
 const getSubscriptionDetail= asyncHandler(async (req, res) => {
     //TODO: check is subscribed
-    //TODO: total no. subscriber of channe;
+    //TODO: total no. subscriber of channel;
     const {channelId:channel} = req.params
     const subscriber=req.user._id
 
@@ -132,7 +132,7 @@ const getSubscribedChannelsList = asyncHandler(async (req, res) => {
 
     return res
     .status(200)
-    .json(new ApiResponse(200,subscriptionsList,"subscriptions list fetched succesfully"))
+    .json(new ApiResponse(200,subscriptionsList,"subscriptions list fetched successfully"))
 
 })
 

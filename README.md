@@ -152,7 +152,7 @@ kubectl apply -k .
 
 > **Important:** K8s hostnames (e.g., `mongodb-0.mongodb.default.svc.cluster.local`) differ from Docker Compose hostnames (e.g., `mongodb`). Always use the correct `.env` file for each deployment target. 
 
-> **Why:** it is required becuase KEDA exist in diffrent namespace so service required complete DNS name
+> **Why:** it is required because KEDA exist in different namespace so service required complete DNS name
 
 ---
 

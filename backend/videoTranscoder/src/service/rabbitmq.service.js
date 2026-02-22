@@ -37,7 +37,7 @@ export async function fetchOneRabbitmqMessage() {
       console.error("Invalid JSON:", msg.content.toString());
     }
 
-    console.log("RabbitMq messaged fecthed")
+    console.log("RabbitMq messaged fetched")
     return {msg,key,channel,connection}
 
 

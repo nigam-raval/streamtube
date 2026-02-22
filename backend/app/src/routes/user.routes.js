@@ -8,7 +8,7 @@ import {
     loginUser, 
     logoutUser, 
     refreshToken, 
-    regsiterUser, 
+    registerUser, 
     updateUserAvatar, 
     updateUserCoverImage, 
     updateUserDetails,
@@ -18,14 +18,14 @@ import {
 
 const router=Router()
 
-router.route("/register").post(regsiterUser)
+router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 
 //secure route
 
 router.route("/logout").post(verifyJWT,logoutUser)
 
-router.route("/refreshToken").post(refreshToken) // refreshToken route jwt vefication happen inside it controller
+router.route("/refreshToken").post(refreshToken) // refreshToken route jwt verification happen inside it controller
 router.route("/getCurrentUser").get(verifyJWT,getCurrentUser)
 router.route("/changeCurrentPassword").post(verifyJWT,changeCurrentPassword)
 router.route("/updateUserDetails").patch(verifyJWT,updateUserDetails)

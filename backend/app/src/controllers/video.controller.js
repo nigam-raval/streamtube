@@ -34,7 +34,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
 
     if(sortType.toLowerCase()!=="asc" && sortType.toLowerCase()!=="desc"){
-        throw new ApiError(400,"use vaild sorting method")
+        throw new ApiError(400,"use valid sorting method")
     }
     
     const sortStr=(sortType.toLowerCase()=="desc"?"-":"")+sortBy
@@ -51,7 +51,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
     
     return res
     .status(200)
-    .json(new ApiResponse(200,videos,"all video feched"))
+    .json(new ApiResponse(200,videos,"all video fetched"))
 })
 
 const publishAVideo = asyncHandler(async (req, res) => {
@@ -136,11 +136,11 @@ const publishAVideo = asyncHandler(async (req, res) => {
     const videoUploadUrl= await generatePresignedUploadUrl(videoContentType,videoContentLength,videoChecksumSHA256,videoKey)
 
     if(!videoUploadUrl){
-        throw new ApiError(500,"something went wrong, video upload presigned url is not genreated ")
+        throw new ApiError(500,"something went wrong, video upload presigned url is not generated ")
     }
 
-    const transcodedVideokey= generateVideoKey(owner,video._id) + "master_video.m3u8"
-    const transcodedVideoUrl= generateUrl(transcodedVideokey)
+    const transcodedVideoKey= generateVideoKey(owner,video._id) + "master_video.m3u8"
+    const transcodedVideoUrl= generateUrl(transcodedVideoKey)
 
     video=await Video.findByIdAndUpdate(
         video._id,
@@ -286,7 +286,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
     
     return res
     .status(200)
-    .json(new ApiResponse(200,video,"publish status is toggled sucessfully"))
+    .json(new ApiResponse(200,video,"publish status is toggled successfully"))
 
 })
 

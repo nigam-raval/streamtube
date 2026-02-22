@@ -27,7 +27,7 @@ const generateAccessAndRefreshToken=async(userId)=>{
         return{accessToken,refreshToken}
         
     } catch (error) {
-        throw new ApiError(500," Something went wrong while genrating refresh and access token")
+        throw new ApiError(500," Something went wrong while generating refresh and access token")
         
     }
 }
@@ -35,7 +35,7 @@ const generateAccessAndRefreshToken=async(userId)=>{
 
 
 
-const regsiterUser=asyncHandler(async(req,res)=>{
+const registerUser=asyncHandler(async(req,res)=>{
     
     // get user detail from frontend 
     const {
@@ -81,7 +81,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
     }
 
 
-    if(coverContentLength){// any cover field can used as condtion , just want to check if user want to upload cover image?
+    if(coverContentLength){// any cover field can used as condition , just want to check if user want to upload cover image?
         
         if(coverContentType!="image/jpeg" && coverContentType!="image/png" && coverContentType!= " "){
             throw new ApiError(400, "wrong content type, only jpeg and png are allowed")
@@ -100,7 +100,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
     }
 
 
-    //check if user is alredy exist based on username or email
+    //check if user is already exist based on username or email
     const existedUser=await User.findOne({
         $or:[{username},{email}]
     })
@@ -122,7 +122,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
 
     // check for user creation
     if(!user){
-        throw new ApiError(500,"something went wrong, user is not registred")
+        throw new ApiError(500,"something went wrong, user is not registered")
     }
 
     const avatarKey= generateUserProfileImageKey(user._id,avatarContentType)
@@ -131,7 +131,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
     const avatarUploadUrl = await generatePresignedUploadUrl(avatarContentType,avatarContentLength,avatarChecksumSHA256,avatarKey)
     
     if(!avatarUploadUrl){
-        throw new ApiError(500, "something went wrong , avatar presigned url is not genrated")
+        throw new ApiError(500, "something went wrong , avatar presigned url is not generated")
     }
     
     
@@ -157,7 +157,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
         },
         {new:true}
     )
-    .select( // remove password and refresh tokenfield from response
+    .select( // remove password and refresh token field from response
         "-password -refreshToken"
     )
 
@@ -186,7 +186,7 @@ const regsiterUser=asyncHandler(async(req,res)=>{
 
     //return res
     return res.status(201).json(
-        new ApiResponse(200,response,"User registred sucessfully")
+        new ApiResponse(200,response,"User registered successfully")
     )
 
 })
@@ -209,7 +209,7 @@ const loginUser=asyncHandler(async (req,res)=>{
 
     if(!user)throw new ApiError(404,"username/email not exist")
 
-    // valdate password corresponding to that username/email
+    // validate password corresponding to that username/email
     let isPasswordValid = await user.isPasswordCorrect(password)
     
     if(!isPasswordValid)throw new ApiError(401,"Invalid Password")
@@ -217,7 +217,7 @@ const loginUser=asyncHandler(async (req,res)=>{
     // create refresh token and access token
     const{accessToken,refreshToken}=await generateAccessAndRefreshToken(user._id)
     
-    // create new object for send as response and create cokkie option(set gobally in this file)
+    // create new object for send as response and create cookie option(set globally in this file)
     const loggedInUser=await User.findById(user._id)
     .select("-password -refreshToken")
 
@@ -239,7 +239,7 @@ const loginUser=asyncHandler(async (req,res)=>{
         StsCredentials
     }
     
-    //send res with cokkie
+    //send res with cookie
     return res
     .status(200)
     .cookie("accessToken",accessToken,cookieOptions)
@@ -280,9 +280,9 @@ const refreshToken=asyncHandler(async(req,res)=>{
         }
     
         if(incomingRefreshToken!==user?.refreshToken){
-            /* TASK: trgier logout route here as user can not able tot acesss secure route 
+            /* TASK: trigger logout route here as user can not able tot access secure route 
             but user is still login */
-            // also look futher if we add this functionality other way
+            // also look further if we add this functionality other way
     
             throw new ApiError(401,"refresh token is expired or used")
         }
@@ -295,7 +295,7 @@ const refreshToken=asyncHandler(async(req,res)=>{
         .cookie("refreshToken",refreshToken,cookieOptions)
         .json(
             new ApiResponse(
-                200,{accessToken,refreshToken},"Accesstoken and Refresh token are refreshed"
+                200,{accessToken,refreshToken},"Access token and Refresh token are refreshed"
             )
         )
     
@@ -314,7 +314,7 @@ const generateStsCredentials=asyncHandler(async (req,res) => {
     res
     .status(200)
     .cookie("StsCredentials",StsCredentials,cookieOptions)
-    .json(new ApiResponse(200,{StsCredentials},"sts credentials generated succesfully"))
+    .json(new ApiResponse(200,{StsCredentials},"sts credentials generated successfully"))
 })
 
 const changeCurrentPassword=asyncHandler(async(req,res)=>{
@@ -419,7 +419,7 @@ const updateUserAvatar=asyncHandler(async(req,res)=>{
     const avatarUrl= generateUrl(avatarKey)
     
     if(!avatarUploadUrl){
-        throw new ApiError(500, "something went wrong , avatar presigned url is not genrated")
+        throw new ApiError(500, "something went wrong , avatar presigned url is not generated")
     }
 
 
@@ -538,7 +538,7 @@ const getUserChannelProfile= asyncHandler(async(req,res)=>{
                 from: "subscriptions",
                 foreignField: "subscriber",
                 localField: "_id",
-                as:"subscribedTo"// to get no. of channel owner subcription
+                as:"subscribedTo"// to get no. of channel owner subscription
             }
         },
         {
@@ -552,8 +552,8 @@ const getUserChannelProfile= asyncHandler(async(req,res)=>{
                 isSubscribed:{
                     $cond:{
                         if:{$in:[req.body?._id,"$subscribers.subscriber"]},
-                        /*here $subscribers refer to alredy selected collection  of object for 
-                        specific channelid(technically it is userid) from subscriber database*/
+                        /*here $subscribers refer to already selected collection  of object for 
+                        specific channelId(technically it is userid) from subscriber database*/
                         then:true,
                         else:false
                     }
@@ -652,7 +652,7 @@ const getWatchHistory =asyncHandler(async(req,res)=>{
 
 
 export {
-    regsiterUser,
+    registerUser,
     loginUser,
     logoutUser,
     getCurrentUser,

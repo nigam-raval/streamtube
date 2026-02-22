@@ -122,7 +122,7 @@ const updatePlaylist = asyncHandler(async (req, res) => {
     }
 
     if(!name && !description){
-        throw new ApiError(400,"malformed request, provide atleast one parameter to update e.g. name, description")
+        throw new ApiError(400,"malformed request, provide at least one parameter to update e.g. name, description")
     }
 
     let updateDetails={}
@@ -172,7 +172,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 
     return res
     .status(200)
-    .json(new ApiResponse(200,playlist,"video add in playlist succesfully"))
+    .json(new ApiResponse(200,playlist,"video add in playlist successfully"))
 
 })
 
@@ -197,7 +197,7 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
     return res
     .status(200)
-    .json(new ApiResponse(200,playlist,"video add in playlist succesfully"))
+    .json(new ApiResponse(200,playlist,"video add in playlist successfully"))
 
 })
 

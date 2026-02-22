@@ -30,7 +30,7 @@ const getCurrentUserBalance= asyncHandler(async (req,res)=>{
 
 
 
-const tranferMoney = asyncHandler(async (req,res) => {
+const transferMoney = asyncHandler(async (req,res) => {
     const {receiver,amount}=req.body
     const sender= req.user?._id
 
@@ -38,7 +38,7 @@ const tranferMoney = asyncHandler(async (req,res) => {
         throw new ApiError(400,"sender, receiver, amount require")
     }
     if(amount<=0){
-        throw new ApiError(400,"amount must be postive")
+        throw new ApiError(400,"amount must be positive")
     }
 
 
@@ -71,7 +71,7 @@ const tranferMoney = asyncHandler(async (req,res) => {
 
     res
     .status(200)
-    .json(new ApiResponse(200,{},"transaction is successfull"));
+    .json(new ApiResponse(200,{},"transaction is successful"));
 
 
 
@@ -79,5 +79,5 @@ const tranferMoney = asyncHandler(async (req,res) => {
 
 
 
-export {getCurrentUserBalance,tranferMoney}
+export {getCurrentUserBalance,transferMoney}
 

@@ -26,7 +26,7 @@ router.route("/subscription/:subscriptionId")
 router.route("/SubscribersList/:channelId")
     .get(getUserChannelSubscribersList);// own subscriber
 
-router.route("/SubscribtionList/:subscriberId")
+router.route("/SubscriptionList/:subscriberId")
     .get(getSubscribedChannelsList)
 
 

@@ -18,7 +18,7 @@ export function authorizeById({ action, subject, Model, param }) {
 
       const id = req.params?.[param];
       if (!id) throw new ApiError(400, `Missing param: ${param}`);
-      if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(400, "Invalid ID"); // Valdiating objectId
+      if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(400, "Invalid ID"); // Validating objectId
 
       const doc = await Model.findById(id);
       if (!doc) throw new ApiError(404, `${subject} not found`);

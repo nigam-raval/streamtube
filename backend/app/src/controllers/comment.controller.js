@@ -36,7 +36,7 @@ const addComment = asyncHandler(async (req, res) => {
 
 const getComments = asyncHandler(async (req, res) => {
     //TODO: get all comments for a video
-    //new TODO: populate iscomment is liked by curent login user
+    //new TODO: populate is comment is liked by current login user
     const {mediaType,postId} = req.params
     const {page = 1, limit = 10,sortBy="createdAt", sortType="desc"} = req.query
     
@@ -54,7 +54,7 @@ const getComments = asyncHandler(async (req, res) => {
     const skipNo=(pageNo-1)*limitNo
 
     if(sortType.toLowerCase()!=="asc" && sortType.toLowerCase()!=="desc"){
-        throw new ApiError(400,"use vaild sorting method")
+        throw new ApiError(400,"use valid sorting method")
     }
 
     const sortStr=(sortType.toLowerCase()=="desc"?"-":"") + sortBy
@@ -118,7 +118,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
     return res
     .status(200)
-    .json(new ApiResponse(200,{},"comment deleted succesfully"))
+    .json(new ApiResponse(200,{},"comment deleted successfully"))
 })
 
 export {

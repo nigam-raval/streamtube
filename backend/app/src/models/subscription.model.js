@@ -7,7 +7,7 @@ const subscriptionSchema= new Schema(
             ref:"User",
             require:true
         },
-        channel:{ //one who(channel owner user,creater,producer) get subscribe by user
+        channel:{ //one who(channel owner user,creator,producer) get subscribe by user
             type:Schema.Types.ObjectId,
             ref:"User",
             require:true

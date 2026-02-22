@@ -6,7 +6,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { AssumeRoleCommand } from '@aws-sdk/client-sts';
 
 
-const uploadObjectOnS3= async function (file,Key) {// uploding local file to s3 without using presigned url
+const uploadObjectOnS3= async function (file,Key) {// uploading local file to s3 without using presigned url
   try {
       const fileBuffer = fs.readFileSync(file.path);
       

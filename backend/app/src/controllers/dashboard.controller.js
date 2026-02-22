@@ -99,7 +99,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
             from: "subscriptions",
             foreignField: "subscriber",
             localField: "_id",
-            as:"subscribedTo"// to get no. of channel owner subcription
+            as:"subscribedTo"// to get no. of channel owner subscription
         }
     },
 
@@ -137,7 +137,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, stats, "user stats are fetched succesfully"));
+    .json(new ApiResponse(200, stats, "user stats are fetched successfully"));
 });
 
 export { getChannelStats };
