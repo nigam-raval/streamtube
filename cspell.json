@@ -1,0 +1,42 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": true,
+  "words": [
+    "AMQP",
+    "autoincrement",
+    "BITRATES",
+    "coverimage",
+    "cpus",
+    "dpage",
+    "EXTM",
+    "healthcheck",
+    "hostnames",
+    "HTTPONLY",
+    "INITDB",
+    "isready",
+    "libx",
+    "matroska",
+    "mongosh",
+    "msvideo",
+    "myminio",
+    "PGADMIN",
+    "PGDATABASE",
+    "PGPASSWORD",
+    "PGUSER",
+    "Postliked",
+    "Presign",
+    "quicktime",
+    "rabbitmqadmin",
+    "refpath",
+    "scaledjob",
+    "streamtube",
+    "stsuser",
+    "stsuserpolicy",
+    "trixie",
+    "veryfast"
+  ],
+  "ignorePaths": [
+    "pnpm-lock.yaml"
+  ]
+}
