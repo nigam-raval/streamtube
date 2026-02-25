@@ -19,10 +19,13 @@
     "matroska",
     "mongosh",
     "msvideo",
+    "mydatabase",
     "myminio",
     "PGADMIN",
     "PGDATABASE",
+    "PGHOST",
     "PGPASSWORD",
+    "PGPORT",
     "PGUSER",
     "Postliked",
     "Presign",
@@ -31,10 +34,13 @@
     "refpath",
     "scaledjob",
     "streamtube",
+    "stspassword",
     "stsuser",
     "stsuserpolicy",
     "trixie",
     "veryfast"
   ],
-  "ignorePaths": ["pnpm-lock.yaml"]
+  "ignorePaths": [
+    "pnpm-lock.yaml"
+  ]
 }
