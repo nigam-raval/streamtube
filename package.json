@@ -5,7 +5,8 @@
   "description": "",
   "scripts": {
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "spell:check": "cspell lint . --cache --no-must-find-files"
   },
   "keywords": [],
   "author": "",

@@ -40,7 +40,5 @@
     "trixie",
     "veryfast"
   ],
-  "ignorePaths": [
-    "pnpm-lock.yaml"
-  ]
+  "ignorePaths": ["pnpm-lock.yaml"]
 }
