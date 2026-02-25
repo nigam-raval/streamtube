@@ -1,8 +1,8 @@
-import { S3Client } from "@aws-sdk/client-s3";
-import { STSClient } from "@aws-sdk/client-sts";
-import dotenv from "dotenv";
+import { S3Client } from '@aws-sdk/client-s3'
+import { STSClient } from '@aws-sdk/client-sts'
+import dotenv from 'dotenv'
 
-dotenv.config({ path: '../../.env', quiet: true }); // '../../.env' is relative to process.cwd(), not this file
+dotenv.config({ path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
 
 const {
   STORAGE_ENDPOINT, // internal (docker DNS) or unset for AWS
@@ -13,9 +13,9 @@ const {
   STORAGE_FORCE_PATH_STYLE,
   STORAGE_STS_USER,
   STORAGE_STS_PASSWORD,
-} = process.env;
+} = process.env
 
-const forcePathStyle = String(STORAGE_FORCE_PATH_STYLE).toLowerCase() === "true";
+const forcePathStyle = String(STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
 
 const s3Client = new S3Client({
   region: STORAGE_REGION,
@@ -25,7 +25,7 @@ const s3Client = new S3Client({
   },
   endpoint: STORAGE_ENDPOINT || undefined,
   forcePathStyle,
-});
+})
 
 // External presign client: used ONLY to generate presigned URLs that Postman/browser can resolve
 const s3PresignClient = new S3Client({
@@ -34,9 +34,9 @@ const s3PresignClient = new S3Client({
     accessKeyId: STORAGE_ACCESS_KEY,
     secretAccessKey: STORAGE_SECRET_KEY,
   },
-  endpoint: (STORAGE_EXTERNAL_ENDPOINT || STORAGE_ENDPOINT) || undefined,
+  endpoint: STORAGE_EXTERNAL_ENDPOINT || STORAGE_ENDPOINT || undefined,
   forcePathStyle,
-});
+})
 
 const stsClient = new STSClient({
   region: STORAGE_REGION,
@@ -46,6 +46,6 @@ const stsClient = new STSClient({
   },
   endpoint: STORAGE_ENDPOINT || undefined,
   forcePathStyle,
-});
+})
 
-export { s3Client, s3PresignClient, stsClient };
+export { s3Client, s3PresignClient, stsClient }

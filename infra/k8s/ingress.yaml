@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: streamtube-ingress
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "50g"
+    nginx.ingress.kubernetes.io/proxy-body-size: '50g'
 spec:
   ingressClassName: nginx
   rules:
@@ -49,4 +49,4 @@ spec:
               service:
                 name: rabbitmq
                 port:
-                  number: 15672 
+                  number: 15672

@@ -20,7 +20,7 @@ kind: StatefulSet
 metadata:
   name: minio
 spec:
-  serviceName: "minio"
+  serviceName: 'minio'
   replicas: 1
   selector:
     matchLabels:
@@ -95,7 +95,7 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 3
-            
+
           livenessProbe:
             httpGet:
               path: /minio/health/live
@@ -111,7 +111,7 @@ spec:
     - metadata:
         name: minio-data
       spec:
-        accessModes: ["ReadWriteOnce"]
+        accessModes: ['ReadWriteOnce']
         resources:
           requests:
             storage: 5Gi
@@ -129,7 +129,7 @@ spec:
       containers:
         - name: minio-init
           image: minio/mc:latest
-          command: ["/bin/sh", "/setup/init.sh"]
+          command: ['/bin/sh', '/setup/init.sh']
           env:
             - name: MINIO_ROOT_USER
               valueFrom:

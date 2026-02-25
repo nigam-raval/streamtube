@@ -6,10 +6,10 @@ metadata:
     part-of: streamtube
     component: worker
 spec:
-  pollingInterval: 2  #sec         
-  maxReplicaCount: 10  #parallel videos
+  pollingInterval: 2 #sec
+  maxReplicaCount: 10 #parallel videos
   successfulJobsHistoryLimit: 0 # Clean up success immediately
-  failedJobsHistoryLimit: 3  # Keep 3 failures for debugging
+  failedJobsHistoryLimit: 3 # Keep 3 failures for debugging
 
   triggers:
     - type: rabbitmq
@@ -18,7 +18,7 @@ spec:
         hostFromEnv: RABBITMQ_URL
         queueName: s3-events
         mode: QueueLength
-        value: "1"  # 1 message = 1 worker pod
+        value: '1' # 1 message = 1 worker pod
 
   jobTargetRef:
     parallelism: 1
@@ -28,20 +28,20 @@ spec:
       metadata:
         labels:
           part-of: streamtube
-          component: worker     
+          component: worker
       spec:
         restartPolicy: Never
         containers:
           - name: streamtube-video-transcoder
             image: streamtube-video-transcoder
-            imagePullPolicy: Never 
+            imagePullPolicy: Never
             resources:
               requests:
-                memory: "512Mi"  
-                cpu: "500m"
+                memory: '512Mi'
+                cpu: '500m'
               limits:
-                memory: "2Gi"
-                cpu: "2000m"
+                memory: '2Gi'
+                cpu: '2000m'
             envFrom:
               - secretRef:
                   name: streamtube-secrets
