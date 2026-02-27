@@ -2,7 +2,7 @@ services:
   app-dev:
     build:
       context: ./
-      dockerfile: ./backend/app/Dockerfile
+      dockerfile: ./backend/app/Dockerfile.dev
     image: app-dev-node
     ports:
       - 127.0.0.1:8001:${PORT}

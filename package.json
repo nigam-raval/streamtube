@@ -5,11 +5,19 @@
   "scripts": {
     "spell:check": "cspell . --cache --no-must-find-files",
     "lint:check": "eslint . --cache",
-    "lint:fix": "eslint . --fix--cache",
+    "lint:fix": "eslint . --fix --cache",
     "format:check": "prettier --check  --ignore-unknown .",
     "format:fix": "prettier --write --ignore-unknown .",
-    "all:check": "pnpm -w spell:check && pnpm -w lint && pnpm -w format:check",
-    "all:fix": "pnpm -w lint:fix && pnpm -w format:fix "
+    "all:check": "pnpm -w spell:check && pnpm -w lint:check && pnpm -w format:check",
+    "all:fix": "pnpm -w lint:fix && pnpm -w format:fix ",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --check --ignore-unknown --cache",
+      "eslint --cache",
+      "cspell --cache --no-must-find-files"
+    ]
   },
   "packageManager": "pnpm@10.30.1",
   "devDependencies": {
