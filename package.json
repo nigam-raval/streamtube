@@ -2,17 +2,15 @@
   "name": "streamtube",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
   "scripts": {
-    "format": "prettier --write . --list-different",
-    "format:check": "prettier --check .",
-    "spell:check": "cspell lint . --cache --no-must-find-files",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "spell:check": "cspell . --cache --no-must-find-files",
+    "lint:check": "eslint . --cache",
+    "lint:fix": "eslint . --fix--cache",
+    "format:check": "prettier --check  --ignore-unknown .",
+    "format:fix": "prettier --write --ignore-unknown .",
+    "all:check": "pnpm -w spell:check && pnpm -w lint && pnpm -w format:check",
+    "all:fix": "pnpm -w lint:fix && pnpm -w format:fix "
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "packageManager": "pnpm@10.30.1",
   "devDependencies": {
     "@cspell/dict-node": "^5.0.9",
@@ -22,6 +20,8 @@
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "3.8.1"
   }
 }

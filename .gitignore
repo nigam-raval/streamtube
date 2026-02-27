@@ -6,3 +6,4 @@ infra/k8s/.env.k8s
 node_modules
 .vscode
 .cspellcache
+.eslintcache
