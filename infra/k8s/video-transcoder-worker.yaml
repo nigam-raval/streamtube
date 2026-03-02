@@ -1,7 +1,7 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
 metadata:
-  name: streamtube-video-transcoder
+  name: streamtube-video-transcoder-worker
   labels:
     part-of: streamtube
     component: worker
@@ -32,8 +32,8 @@ spec:
       spec:
         restartPolicy: Never
         containers:
-          - name: streamtube-video-transcoder
-            image: streamtube-video-transcoder
+          - name: streamtube-video-transcoder-worker
+            image: streamtube-video-transcoder-worker
             imagePullPolicy: Never
             resources:
               requests:

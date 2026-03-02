@@ -16,6 +16,7 @@
     "HTTPONLY",
     "INITDB",
     "isready",
+    "kustomization",
     "libx",
     "matroska",
     "mongosh",

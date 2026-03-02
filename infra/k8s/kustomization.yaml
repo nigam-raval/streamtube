@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ingress.yaml
   - app.yaml
-  - video-transcoder-scaledjob.yaml
+  - video-transcoder-worker.yaml
   - rabbitmq.yaml
   - minio.yaml
   - postgres.yaml
@@ -25,4 +25,4 @@ secretGenerator:
       - .env.k8s
     type: Opaque
     options:
-      disableNameSuffixHash: true # because keda can't handle random suffix
+      disableNameSuffixHash: true # because KEDA can't handle random suffix

@@ -1,5 +1,5 @@
 services:
-  streamtube-app:
+  app:
     build:
       context: ./
       dockerfile: ./backend/app/Dockerfile
@@ -30,7 +30,7 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
-      bucket-storage:
+      minio:
         condition: service_healthy
     ports:
       - 127.0.0.1:8001:${PORT}
@@ -53,7 +53,7 @@ services:
     build:
       context: ./
       dockerfile: ./backend/videoTranscoder/Dockerfile
-    image: video-transcoder
+    image: streamtube-video-transcoder-worker
     environment:
       STORAGE_REGION: ${STORAGE_REGION}
       STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY}
@@ -65,7 +65,7 @@ services:
       RABBITMQ_QUEUE: ${RABBITMQ_QUEUE}
       RABBITMQ_URL: ${RABBITMQ_URL}
     depends_on:
-      bucket-storage:
+      minio:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
@@ -129,7 +129,7 @@ services:
       retries: 5
       start_period: 10s
 
-  bucket-storage:
+  minio:
     image: minio/minio:latest
     environment:
       MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY}
@@ -161,10 +161,10 @@ services:
       retries: 5
       start_period: 10s
 
-  bucket-storage-init:
+  minio-init:
     image: minio/mc:latest
     depends_on:
-      bucket-storage:
+      minio:
         condition: service_healthy
     environment:
       MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY}
