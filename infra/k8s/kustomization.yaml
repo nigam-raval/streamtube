@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - ../config
   - ingress.yaml
   - app.yaml
   - video-transcoder-worker.yaml
@@ -9,15 +10,6 @@ resources:
   - minio.yaml
   - postgres.yaml
   - mongodb.yaml
-
-configMapGenerator:
-  - name: rabbitmq-init-script
-    files:
-      - rabbitmq/init.sh
-  - name: minio-setup-files
-    files:
-      - s3/init.sh
-      - s3/sts-streamtube-readonly-policy.json
 
 secretGenerator:
   - name: streamtube-secrets

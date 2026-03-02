@@ -173,8 +173,8 @@ services:
       STORAGE_STS_PASSWORD: ${STORAGE_STS_PASSWORD}
       STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
     volumes:
-      - ./infra/k8s/s3/init.sh/:/setup/init.sh
-      - ./infra/k8s/s3/sts-streamtube-readonly-policy.json:/setup/sts-streamtube-readonly-policy.json
+      - ./infra/config/s3/init.sh/:/setup/init.sh
+      - ./infra/config/s3/sts-streamtube-readonly-policy.json:/setup/sts-streamtube-readonly-policy.json
     networks:
       - streamtube
     entrypoint: ['/bin/sh', '/setup/init.sh']
@@ -212,7 +212,7 @@ services:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
     volumes:
-      - ./infra/k8s/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
+      - ./infra/config/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
     entrypoint: ['/bin/sh', '/usr/local/bin/init.sh']
 
 volumes:
