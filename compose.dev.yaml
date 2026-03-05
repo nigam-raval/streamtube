@@ -195,6 +195,33 @@ services:
     volumes:
       - ./infra/config/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
     entrypoint: ['/bin/sh', '/usr/local/bin/init.sh']
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - '127.0.0.1:9090:9090'
+    networks:
+      - streamtube-dev
+    volumes:
+      - ./infra/config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-dev-data:/prometheus
+    environment:
+      APP_HOSTNAME: ${APP_DOCKER_HOSTNAME}
+      APP_PORT: ${PORT}
+      APP_URL: app:8001
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--enable-feature=expand-external-labels'
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - '127.0.0.1:3000:3000'
+    networks:
+      - streamtube-dev
+    volumes:
+      - grafana-dev-data:/var/lib/grafana
+
   pgadmin:
     image: dpage/pgadmin4:latest
     restart: always
@@ -215,8 +242,10 @@ volumes:
   mongodb-dev-data:
   minio-dev-data:
   pg-dev-data:
-  pgadmin-dev-data:
   rabbitmq-dev-data:
+  prometheus-dev-data:
+  grafana-dev-data:
+  pgadmin-dev-data:
 
 networks:
   streamtube-dev:
