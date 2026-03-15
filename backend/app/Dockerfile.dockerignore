@@ -1,0 +1,10 @@
+**/.env*
+**/node_modules
+**/public/temp/*
+**/.gitignore
+**/.prettierignore
+**/.prettierrc
+**/compose.yaml
+**/readme.md
+**/apiTestingCollectionsBruno
+**/generated/prisma

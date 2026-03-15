@@ -138,16 +138,20 @@ docker compose up --build
 ```bash
 cd infra/k8s
 
-# 1. Create environment file
-cp .env.k8s.example .env.k8s
+# Create environment file
 # Edit .env.k8s with your K8s-specific values
+cp .env.k8s.example .env.k8s
 
-# 2. Build and load Docker images into your cluster
-docker build -t streamtube-app ./backend/app
-docker build -t streamtube-video-transcoder ./backend/videoTranscoder
+# Move to streamtube root
+cd ../..
 
-# 3. Deploy with Kustomize
-kubectl apply -k .
+# Build and load Docker images into your cluster
+docker build -t streamtube-app  -f ./backend/app/Dockerfile .
+
+docker build -t streamtube-video-transcoder-worker -f backend/videoTranscoder/Dockerfile .
+
+# Deploy with Kustomize
+kubectl apply -k infra/k8s
 ```
 
 > **Important:** K8s hostnames (e.g., `mongodb-0.mongodb.default.svc.cluster.local`) differ from Docker Compose hostnames (e.g., `mongodb`). Always use the correct `.env` file for each deployment target. 

@@ -10,7 +10,7 @@ COPY pnpm-lock.yaml  pnpm-workspace.yaml ./
 COPY backend/app/package.json  backend/app/package.json
 
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY backend/app backend/app
 
