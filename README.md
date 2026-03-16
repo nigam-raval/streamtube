@@ -60,6 +60,9 @@ The video transcoder uses a **KEDA ScaledJob** that monitors the RabbitMQ `s3-ev
 
 In Docker Compose, KEDA is absent, so the worker runs in a polling loop (`sleep 5`) to simulate the same behavior.
 
+## Kubernetes Cluster Overview
+![Dashboard showing the live microservices for streamtube](docs/images/k8s-dashboard.png)
+
 ## Tech Stack
 
 | Layer | Technology |
