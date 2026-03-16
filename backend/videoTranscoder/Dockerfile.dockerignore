@@ -3,3 +3,5 @@
 **/tmp
 **/.gitignore
 **/compose.yaml
+**/Dockerfile*
+**/.dockerignore
