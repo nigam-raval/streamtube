@@ -182,8 +182,8 @@ kubectl apply -k infra/k8s
 
 | Service | Host |
 |---------|------|
-| API Server | `app.streamtube.local` |
-| MinIO API | `minio.streamtube.local` |
-| MinIO Console | `minio-console.streamtube.local` |
-| RabbitMQ Management | `rabbitmq-console.streamtube.local` |
+| API Server | `app.streamtube.<your-domain>` |
+| MinIO API | `minio.streamtube.<your-domain>` |
+| MinIO Console | `minio-console.streamtube.<your-domain>` |
+| RabbitMQ Management | `rabbitmq-console.streamtube.<your-domain>` |
 
