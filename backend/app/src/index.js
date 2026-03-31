@@ -50,7 +50,7 @@ const startServer = async () => {
       console.error(
         `Unable to connect to services after ${STARTUP_MAX_RETRIES} attempts, Shutting down`
       )
-      await gracefulShutdown('REQUIRED_SERVICES_UNAVAILABLE', 1)
+      await gracefulShutdown({ exitCode: 1, message: 'Required Services Unavailable' })
     }
 
     server = app.listen(PORT, () => {
@@ -63,11 +63,12 @@ const startServer = async () => {
 
 let shuttingDown = false
 
-const gracefulShutdown = async (signal, exitCode = 0) => {
+const gracefulShutdown = async ({ exitCode = 0, message, signal }) => {
   if (shuttingDown) return
   shuttingDown = true
 
-  console.log(`\nReceived ${signal}, Shutting down gracefully.`)
+  if (signal) console.log(`\nReceived ${signal}, Shutting down gracefully.`)
+  if (message) console.log(`\nReason: ${message}`)
 
   try {
     if (server) {
@@ -100,7 +101,7 @@ const gracefulShutdown = async (signal, exitCode = 0) => {
       console.log('S3 STS client destroyed')
     }
 
-    console.log('Graceful shutdown complete successfully')
+    console.log(`Graceful shutdown complete with exit code ${exitCode} `)
 
     process.exit(exitCode)
   } catch (error) {
@@ -109,7 +110,7 @@ const gracefulShutdown = async (signal, exitCode = 0) => {
   }
 }
 
-process.on('SIGINT', async () => await gracefulShutdown('SIGINT'))
-process.on('SIGTERM', async () => await gracefulShutdown('SIGTERM'))
+process.on('SIGINT', async () => await gracefulShutdown({ exitCode: 130, signal: 'SIGINT' }))
+process.on('SIGTERM', async () => await gracefulShutdown({ exitCode: 143, signal: 'SIGTERM' }))
 
 await startServer()
