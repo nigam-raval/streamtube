@@ -18,6 +18,7 @@ const requiredVariables = [
   'MONGODB_NAME',
   'MONGODB_AUTH_SOURCE',
   'MONGODB_URI',
+  'MONGODB_CONNECTION_TIMEOUT',
   'DATABASE_URL',
   'STORAGE_REGION',
   'STORAGE_ACCESS_KEY',
@@ -60,6 +61,7 @@ const PORT = Number(process.env.PORT) || 8000
 const STARTUP_INITIAL_DELAY = Number(process.env.STARTUP_INITIAL_DELAY) || 10000
 const STARTUP_RETRY_DELAY = Number(process.env.STARTUP_RETRY_DELAY) || 5000
 const STARTUP_MAX_RETRIES = Number(process.env.STARTUP_MAX_RETRIES) || 3
+const MONGODB_CONNECTION_TIMEOUT= Number(process.env.MONGODB_CONNECTION_TIMEOUT)
 const forcePathStyle = String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
 const COOKIE_OPTION_HTTPONLY = process.env.COOKIE_OPTION_HTTPONLY?.toLowerCase() === 'true'
 const COOKIE_OPTION_SECURE = process.env.COOKIE_OPTION_SECURE?.toLowerCase() === 'true'
@@ -73,6 +75,7 @@ export const env = {
   MONGODB_URI,
   MONGODB_NAME,
   MONGODB_AUTH_SOURCE,
+  MONGODB_CONNECTION_TIMEOUT,
   DATABASE_URL,
   STORAGE_ENDPOINT,
   STORAGE_EXTERNAL_ENDPOINT,

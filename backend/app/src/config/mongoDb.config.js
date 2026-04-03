@@ -5,7 +5,7 @@ const connectMongoDb = async () => {
   await mongoose.connect(
     `${env.MONGODB_URI}/${env.MONGODB_NAME}?authSource=${env.MONGODB_AUTH_SOURCE}`,
     {
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: env.MONGODB_CONNECTION_TIMEOUT,
     }
   )
 }
