@@ -63,7 +63,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
     ports:
       - 127.0.0.1:27017:27017
     networks:
@@ -79,7 +79,7 @@ services:
           '-u',
           '${MONGODB_ROOT_USERNAME}',
           '-p',
-          '${DB_ROOT_PASSWORD}',
+          '${MONGODB_ROOT_PASSWORD}',
           '--authenticationDatabase',
           '${AUTH_SOURCE}',
           '--eval',

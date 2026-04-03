@@ -40,7 +40,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: streamtube-secrets
-                  key: DB_ROOT_PASSWORD
+                  key: MONGODB_ROOT_PASSWORD
             - name: AUTH_SOURCE
               valueFrom:
                 secretKeyRef:

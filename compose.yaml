@@ -6,7 +6,7 @@ services:
     image: streamtube-app
     environment:
       MONGODB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
-      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
       PORT: ${PORT}
       MONGODB_URI: ${MONGODB_URI}
       AUTH_SOURCE: ${AUTH_SOURCE}
@@ -98,7 +98,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
     ports:
       - 127.0.0.1:27017:27017
     networks:
