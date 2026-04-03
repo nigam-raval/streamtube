@@ -81,7 +81,7 @@ services:
           '-p',
           '${MONGODB_ROOT_PASSWORD}',
           '--authenticationDatabase',
-          '${AUTH_SOURCE}',
+          '${MONGODB_AUTH_SOURCE}',
           '--eval',
           "db.adminCommand('ping').ok",
         ]
