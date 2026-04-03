@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
+import { env } from './env.config.js'
 
 const connectMongoDb = async () => {
   await mongoose.connect(
-    `${process.env.MONGODB_URI}/${process.env.DB_NAME}?authSource=${process.env.AUTH_SOURCE}`,
+    `${env.MONGODB_URI}/${env.DB_NAME}?authSource=${env.AUTH_SOURCE}`,
     { serverSelectionTimeoutMS: 5000 }
   )
 }

@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import { app } from './app.js'
 import connectMongoDb from './config/mongoDb.config.js'
 import prisma from './config/postgres.config.js'
@@ -6,13 +5,7 @@ import { s3Client, s3PresignClient, stsClient } from './config/s3.config.js'
 import { HeadBucketCommand } from '@aws-sdk/client-s3'
 import { sleep } from './utils/sleep.js'
 import mongoose from 'mongoose'
-
-dotenv.config({ path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
-
-const PORT = Number(process.env.PORT) || 8000
-const STARTUP_INITIAL_DELAY = Number(process.env.STARTUP_INITIAL_DELAY) || 10000
-const STARTUP_RETRY_DELAY = Number(process.env.STARTUP_RETRY_DELAY) || 5000
-const STARTUP_MAX_RETRIES = Number(process.env.STARTUP_MAX_RETRIES) || 3
+import { env } from './config/env.config.js'
 
 const connectDependencies = async () => {
   try {
@@ -22,7 +15,7 @@ const connectDependencies = async () => {
     await prisma.$connect()
     console.log('Postgres (Prisma) Connected')
 
-    await s3Client.send(new HeadBucketCommand({ Bucket: process.env.STORAGE_BUCKET }))
+    await s3Client.send(new HeadBucketCommand({ Bucket: env.STORAGE_BUCKET }))
     console.log('MinIO (S3) Connected')
 
     return true
@@ -37,24 +30,24 @@ let server
 
 const startServer = async () => {
   try {
-    for (let attempt = 1; attempt <= STARTUP_MAX_RETRIES; attempt++) {
-      const delay = attempt === 1 ? STARTUP_INITIAL_DELAY : STARTUP_RETRY_DELAY
-      console.log(`attempt ${attempt}/${STARTUP_MAX_RETRIES} : Sleeping for ${delay / 1000}s`)
+    for (let attempt = 1; attempt <= env.STARTUP_MAX_RETRIES; attempt++) {
+      const delay = attempt === 1 ? env.STARTUP_INITIAL_DELAY : env.STARTUP_RETRY_DELAY
+      console.log(`attempt ${attempt}/${env.STARTUP_MAX_RETRIES} : Sleeping for ${delay / 1000}s`)
       await sleep(delay)
-      console.log(`attempt ${attempt}/${STARTUP_MAX_RETRIES} : connecting dependencies `)
+      console.log(`attempt ${attempt}/${env.STARTUP_MAX_RETRIES} : connecting dependencies `)
       dependenciesReady = await connectDependencies()
       if (dependenciesReady) break
     }
 
     if (!dependenciesReady) {
       console.error(
-        `Unable to connect to services after ${STARTUP_MAX_RETRIES} attempts, Shutting down`
+        `Unable to connect to services after ${env.STARTUP_MAX_RETRIES} attempts, Shutting down`
       )
       await gracefulShutdown({ exitCode: 1, message: 'Required Services Unavailable' })
     }
 
-    server = app.listen(PORT, () => {
-      console.log(`server is running on ${PORT}`)
+    server = app.listen(env.PORT, () => {
+      console.log(`server is running on ${env.PORT}`)
     })
   } catch (error) {
     console.error('Server Startup Error:', error)

@@ -1,0 +1,92 @@
+import dotenv from 'dotenv'
+import { ApiError } from '../utils/ApiError.js'
+dotenv.config({ path: '../../.env', quiet: true })
+
+const requiredVariables = [
+  'PORT',
+  'CORS_ORIGIN',
+  'ACCESS_TOKEN_SECRET',
+  'ACCESS_TOKEN_EXPIRE',
+  'REFRESH_TOKEN_SECRET',
+  'REFRESH_TOKEN_EXPIRE',
+  'STARTUP_MAX_RETRIES',
+  'COOKIE_OPTION_SECURE',
+  'COOKIE_OPTION_HTTPONLY',
+  'APP_DOCKER_HOSTNAME',
+  'DB_ROOT_USERNAME',
+  'DB_ROOT_PASSWORD',
+  'DB_NAME',
+  'AUTH_SOURCE',
+  'MONGODB_URI',
+  'DATABASE_URL',
+  'STORAGE_REGION',
+  'STORAGE_ACCESS_KEY',
+  'STORAGE_SECRET_KEY',
+  'STORAGE_BUCKET',
+  'STORAGE_STS_USER',
+  'STORAGE_STS_PASSWORD',
+  'STORAGE_ENDPOINT',
+  'STORAGE_EXTERNAL_ENDPOINT',
+  'STORAGE_FORCE_PATH_STYLE',
+]
+
+const missingVariables = requiredVariables.filter((Variable) => !process.env[Variable])
+
+if (missingVariables.length > 0) {
+  throw new ApiError(`Missing required ENV variables: ${missingVariables.join(', ')}`)
+}
+
+const {
+  MONGODB_URI,
+  DB_NAME,
+  CORS_ORIGIN,
+  AUTH_SOURCE,
+  STORAGE_BUCKET,
+  DATABASE_URL,
+  STORAGE_ENDPOINT,
+  STORAGE_EXTERNAL_ENDPOINT,
+  STORAGE_REGION,
+  STORAGE_ACCESS_KEY,
+  STORAGE_SECRET_KEY,
+  STORAGE_STS_USER,
+  STORAGE_STS_PASSWORD,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRE,
+  ACCESS_TOKEN_SECRET,
+  ACCESS_TOKEN_EXPIRE,
+} = process.env
+
+const PORT = Number(process.env.PORT) || 8000
+const STARTUP_INITIAL_DELAY = Number(process.env.STARTUP_INITIAL_DELAY) || 10000
+const STARTUP_RETRY_DELAY = Number(process.env.STARTUP_RETRY_DELAY) || 5000
+const STARTUP_MAX_RETRIES = Number(process.env.STARTUP_MAX_RETRIES) || 3
+const forcePathStyle = String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
+const COOKIE_OPTION_HTTPONLY = process.env.COOKIE_OPTION_HTTPONLY?.toLowerCase() === 'true'
+const COOKIE_OPTION_SECURE = process.env.COOKIE_OPTION_SECURE?.toLowerCase() === 'true'
+
+export const env = {
+  PORT,
+  STARTUP_INITIAL_DELAY,
+  STARTUP_RETRY_DELAY,
+  STARTUP_MAX_RETRIES,
+  CORS_ORIGIN,
+  MONGODB_URI,
+  DB_NAME,
+  AUTH_SOURCE,
+  DATABASE_URL,
+  STORAGE_ENDPOINT,
+  STORAGE_EXTERNAL_ENDPOINT,
+  STORAGE_REGION,
+  STORAGE_BUCKET,
+  STORAGE_ACCESS_KEY,
+  STORAGE_SECRET_KEY,
+  STORAGE_STS_USER,
+  STORAGE_STS_PASSWORD,
+  forcePathStyle,
+  COOKIE_OPTION_HTTPONLY,
+  COOKIE_OPTION_SECURE,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRE,
+  ACCESS_TOKEN_SECRET,
+  ACCESS_TOKEN_EXPIRE,
+}
