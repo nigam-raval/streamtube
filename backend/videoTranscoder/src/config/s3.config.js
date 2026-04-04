@@ -1,23 +1,13 @@
 import { S3Client } from '@aws-sdk/client-s3'
-import dotenv from 'dotenv'
-dotenv.config({ path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
-
-// AWS S3 or minIO
-const {
-  STORAGE_ENDPOINT,
-  STORAGE_REGION,
-  STORAGE_ACCESS_KEY,
-  STORAGE_SECRET_KEY,
-  STORAGE_FORCE_PATH_STYLE,
-} = process.env
+import { env } from './env.config.js'
 
 export const s3 = new S3Client({
-  region: STORAGE_REGION,
+  region: env.STORAGE_REGION,
   credentials: {
-    accessKeyId: STORAGE_ACCESS_KEY,
-    secretAccessKey: STORAGE_SECRET_KEY,
+    accessKeyId: env.STORAGE_ACCESS_KEY,
+    secretAccessKey: env.STORAGE_SECRET_KEY,
   },
   requestTimeout: 360000,
-  endpoint: STORAGE_ENDPOINT || undefined,
-  forcePathStyle: STORAGE_FORCE_PATH_STYLE,
+  endpoint: env.STORAGE_ENDPOINT || undefined,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
