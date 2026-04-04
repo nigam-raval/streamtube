@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import prisma from '../config/postgres.config.js'
 import { s3Client } from '../config/s3.config.js'
 import { HeadBucketCommand } from '@aws-sdk/client-s3'
+import { env } from '../config/env.config.js'
 
 const liveness = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, 'server is healthy'))
@@ -28,7 +29,7 @@ const readiness = asyncHandler(async (req, res) => {
 
   let s3connected
   try {
-    await s3Client.send(new HeadBucketCommand({ Bucket: process.env.STORAGE_BUCKET }))
+    await s3Client.send(new HeadBucketCommand({ Bucket: env.STORAGE_BUCKET }))
     s3connected = true
   } catch {
     s3connected = false

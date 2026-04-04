@@ -10,6 +10,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import fs from 'fs'
 import { ApiError } from '../utils/ApiError.js'
 import { AssumeRoleCommand } from '@aws-sdk/client-sts'
+import { env } from '../config/env.config.js'
 
 const uploadObjectOnS3 = async function (file, Key) {
   // uploading local file to s3 without using presigned url
@@ -17,7 +18,7 @@ const uploadObjectOnS3 = async function (file, Key) {
     const fileBuffer = fs.readFileSync(file.path)
 
     const command = new PutObjectCommand({
-      Bucket: process.env.STORAGE_BUCKET,
+      Bucket: env.STORAGE_BUCKET,
       Key: Key,
       ContentType: file.mimetype,
       Body: fileBuffer,
@@ -26,7 +27,7 @@ const uploadObjectOnS3 = async function (file, Key) {
     await s3Client.send(command)
     return {
       Key,
-      url: `${process.env.STORAGE_EXTERNAL_ENDPOINT}/${process.env.STORAGE_BUCKET}/${Key}`,
+      url: `${env.STORAGE_EXTERNAL_ENDPOINT}/${env.STORAGE_BUCKET}/${Key}`,
     }
   } catch (error) {
     throw new ApiError(500, `uploadOnS3 error: ${error}`)
@@ -36,7 +37,7 @@ const uploadObjectOnS3 = async function (file, Key) {
 const generatePresignedDownloadUrl = async function (Key, time = '300') {
   try {
     const command = new GetObjectCommand({
-      Bucket: process.env.STORAGE_BUCKET,
+      Bucket: env.STORAGE_BUCKET,
       Key: Key,
     })
     let url = await getSignedUrl(s3PresignClient, command, { expiresIn: time })
@@ -56,7 +57,7 @@ const generatePresignedUploadUrl = async function (
 ) {
   try {
     const command = new PutObjectCommand({
-      Bucket: process.env.STORAGE_BUCKET,
+      Bucket: env.STORAGE_BUCKET,
       Key: Key,
       ContentType: ContentType,
       ContentLength: ContentLength,
@@ -78,7 +79,7 @@ const generatePresignedUploadUrl = async function (
 const deleteObjectOnS3 = async function (Key) {
   try {
     const command = new DeleteObjectCommand({
-      Bucket: process.env.STORAGE_BUCKET,
+      Bucket: env.STORAGE_BUCKET,
       Key: Key,
     })
     const del = await s3Client.send(command)
@@ -92,7 +93,7 @@ const listObjectsByPrefixOnS3 = async function (Prefix) {
   try {
     const list = await s3Client.send(
       new ListObjectsV2Command({
-        Bucket: process.env.STORAGE_BUCKET,
+        Bucket: env.STORAGE_BUCKET,
         Prefix: Prefix,
       })
     )
@@ -115,7 +116,7 @@ const deleteByPrefixOnS3 = async function (Prefix) {
 
       const del = await s3Client.send(
         new DeleteObjectsCommand({
-          Bucket: process.env.STORAGE_BUCKET,
+          Bucket: env.STORAGE_BUCKET,
           Delete: { Objects: objectsToDelete },
         })
       )
@@ -138,15 +139,14 @@ const stsOnS3 = async function () {
 
     const res = await stsClient.send(command)
 
-    const endpoint = process.env.STORAGE_EXTERNAL_ENDPOINT || process.env.STORAGE_ENDPOINT || null
-    const forcePathStyle = String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
+    const endpoint = env.STORAGE_EXTERNAL_ENDPOINT || env.STORAGE_ENDPOINT || null
 
     return {
       credentials: res.Credentials,
       endpoint,
-      region: process.env.STORAGE_REGION || null,
-      forcePathStyle,
-      bucket: process.env.STORAGE_BUCKET || null,
+      region: env.STORAGE_REGION || null,
+      forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
+      bucket: env.STORAGE_BUCKET || null,
     }
   } catch (error) {
     throw new ApiError(`sts error: ${error}`)

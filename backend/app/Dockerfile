@@ -2,6 +2,9 @@ FROM node:25-trixie-slim
 
 ENV CI=true
 
+# as env are not present in building stage
+ENV SKIP_ENV_VALIDATION=true
+
 RUN npm install -g pnpm
 
 WORKDIR /app
