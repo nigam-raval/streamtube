@@ -2,21 +2,12 @@ import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 import { createWriteStream, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { pipeline } from 'stream/promises'
-import dotenv from 'dotenv'
 import { s3 } from '../config/s3.config.js'
-
-dotenv.config({ quiet: true })
-
-const STORAGE_BUCKET = process.env.STORAGE_BUCKET
+import { env } from '../config/env.config.js'
 
 export async function downloadFromS3(s3Key, localPath) {
-  if (!STORAGE_BUCKET) {
-    console.error('Error: STORAGE_BUCKET is not set in .env')
-    process.exit(1)
-  }
-
-  console.log(`Downloading ${s3Key} from S3 bucket ${STORAGE_BUCKET}...`)
-  const command = new GetObjectCommand({ Bucket: STORAGE_BUCKET, Key: s3Key })
+  console.log(`Downloading ${s3Key} from S3 bucket ${env.STORAGE_BUCKET}...`)
+  const command = new GetObjectCommand({ Bucket: env.STORAGE_BUCKET, Key: s3Key })
   const response = await s3.send(command)
   await pipeline(response.Body, createWriteStream(localPath))
   console.log('Download complete.')
@@ -28,7 +19,7 @@ export async function uploadDirectoryToS3(localDir, s3Prefix) {
     const filePath = join(localDir, file)
     const key = join(s3Prefix, file).replace(/\\/g, '/') // Fix Windows path issue
     const fileContent = readFileSync(filePath)
-    await s3.send(new PutObjectCommand({ Bucket: STORAGE_BUCKET, Key: key, Body: fileContent }))
+    await s3.send(new PutObjectCommand({ Bucket: env.STORAGE_BUCKET, Key: key, Body: fileContent }))
   }
   console.log('All files uploaded to S3.')
 }

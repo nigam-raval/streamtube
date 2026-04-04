@@ -1,7 +1,7 @@
-const STORAGE_BUCKET = process.env.STORAGE_BUCKET
+import { env } from '../config/env.config.js'
 
 export function removeBucketName(s3Key) {
-  const replaceString = STORAGE_BUCKET + '/'
+  const replaceString = env.STORAGE_BUCKET + '/'
   const newKey = s3Key.replace(replaceString, '')
   return newKey
 }
