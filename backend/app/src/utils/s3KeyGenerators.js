@@ -1,6 +1,5 @@
-import dotenv from 'dotenv'
 import { getExtensionFromMime } from './mime.js'
-dotenv.config({ path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
+import { env } from '../config/env.config.js'
 
 function generateUserProfileImageKey(userId, mimeType) {
   const fileExtension = getExtensionFromMime(mimeType)
@@ -27,10 +26,10 @@ function generateVideoKey(userId, videoId) {
 }
 
 function generateUrl(Key) {
-  if (process.env.STORAGE_EXTERNAL_ENDPOINT) {
-    return `${process.env.STORAGE_EXTERNAL_ENDPOINT}/${process.env.STORAGE_BUCKET}/${Key}`
+  if (env.STORAGE_EXTERNAL_ENDPOINT) {
+    return `${env.STORAGE_EXTERNAL_ENDPOINT}/${env.STORAGE_BUCKET}/${Key}`
   } else {
-    return `${process.env.STORAGE_ENDPOINT}/${process.env.STORAGE_BUCKET}/${Key}`
+    return `${env.STORAGE_ENDPOINT}/${env.STORAGE_BUCKET}/${Key}`
   }
 }
 

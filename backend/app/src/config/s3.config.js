@@ -1,51 +1,36 @@
 import { S3Client } from '@aws-sdk/client-s3'
 import { STSClient } from '@aws-sdk/client-sts'
-import dotenv from 'dotenv'
-
-dotenv.config({ path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
-
-const {
-  STORAGE_ENDPOINT, // internal (docker DNS) or unset for AWS
-  STORAGE_EXTERNAL_ENDPOINT, // external hostname for presigned URLs (localhost for Postman)
-  STORAGE_REGION,
-  STORAGE_ACCESS_KEY,
-  STORAGE_SECRET_KEY,
-  STORAGE_FORCE_PATH_STYLE,
-  STORAGE_STS_USER,
-  STORAGE_STS_PASSWORD,
-} = process.env
-
-const forcePathStyle = String(STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
+import { env } from './env.config.js'
 
 const s3Client = new S3Client({
-  region: STORAGE_REGION,
+  region: env.STORAGE_REGION,
   credentials: {
-    accessKeyId: STORAGE_ACCESS_KEY,
-    secretAccessKey: STORAGE_SECRET_KEY,
+    accessKeyId: env.STORAGE_ACCESS_KEY,
+    secretAccessKey: env.STORAGE_SECRET_KEY,
   },
-  endpoint: STORAGE_ENDPOINT || undefined,
-  forcePathStyle,
+  endpoint: env.STORAGE_ENDPOINT || undefined,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
 
 // External presign client: used ONLY to generate presigned URLs that Postman/browser can resolve
 const s3PresignClient = new S3Client({
-  region: STORAGE_REGION,
+  region: env.STORAGE_REGION,
   credentials: {
-    accessKeyId: STORAGE_ACCESS_KEY,
-    secretAccessKey: STORAGE_SECRET_KEY,
+    accessKeyId: env.STORAGE_ACCESS_KEY,
+    secretAccessKey: env.STORAGE_SECRET_KEY,
   },
-  endpoint: STORAGE_EXTERNAL_ENDPOINT || STORAGE_ENDPOINT || undefined,
-  forcePathStyle,
+  endpoint: env.STORAGE_EXTERNAL_ENDPOINT || env.STORAGE_ENDPOINT || undefined,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
 
 const stsClient = new STSClient({
-  region: STORAGE_REGION,
+  region: env.STORAGE_REGION,
   credentials: {
-    accessKeyId: STORAGE_STS_USER,
-    secretAccessKey: STORAGE_STS_PASSWORD,
+    accessKeyId: env.STORAGE_STS_USER,
+    secretAccessKey: env.STORAGE_STS_PASSWORD,
   },
-  endpoint: STORAGE_ENDPOINT || undefined,
-  forcePathStyle,
+  endpoint: env.STORAGE_ENDPOINT || undefined,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
 
 export { s3Client, s3PresignClient, stsClient }

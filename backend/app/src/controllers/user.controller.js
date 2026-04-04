@@ -12,10 +12,11 @@ import {
 } from '../utils/s3KeyGenerators.js'
 import prisma from '../config/postgres.config.js'
 import validator from 'validator'
+import { env } from '../config/env.config.js'
 
 const cookieOptions = {
-  httpOnly: process.env.COOKIE_OPTION_HTTPONLY?.toLowerCase() === 'true',
-  secure: process.env.COOKIE_OPTION_SECURE?.toLowerCase() === 'true',
+  httpOnly: env.COOKIE_OPTION_HTTPONLY,
+  secure: env.COOKIE_OPTION_SECURE,
 }
 
 const generateAccessAndRefreshToken = async (userId) => {
@@ -263,7 +264,7 @@ const refreshToken = asyncHandler(async (req, res) => {
   }
 
   try {
-    const decodedRefreshToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+    const decodedRefreshToken = jwt.verify(incomingRefreshToken, env.REFRESH_TOKEN_SECRET)
 
     const user = await User.findById(decodedRefreshToken?._id)
 
