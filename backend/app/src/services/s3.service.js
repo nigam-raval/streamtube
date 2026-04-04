@@ -145,7 +145,7 @@ const stsOnS3 = async function () {
       credentials: res.Credentials,
       endpoint,
       region: env.STORAGE_REGION || null,
-      forcePathStyle: env.forcePathStyle,
+      forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
       bucket: env.STORAGE_BUCKET || null,
     }
   } catch (error) {

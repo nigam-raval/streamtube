@@ -9,7 +9,7 @@ const s3Client = new S3Client({
     secretAccessKey: env.STORAGE_SECRET_KEY,
   },
   endpoint: env.STORAGE_ENDPOINT || undefined,
-  forcePathStyle: env.forcePathStyle,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
 
 // External presign client: used ONLY to generate presigned URLs that Postman/browser can resolve
@@ -20,7 +20,7 @@ const s3PresignClient = new S3Client({
     secretAccessKey: env.STORAGE_SECRET_KEY,
   },
   endpoint: env.STORAGE_EXTERNAL_ENDPOINT || env.STORAGE_ENDPOINT || undefined,
-  forcePathStyle: env.forcePathStyle,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
 
 const stsClient = new STSClient({
@@ -30,7 +30,7 @@ const stsClient = new STSClient({
     secretAccessKey: env.STORAGE_STS_PASSWORD,
   },
   endpoint: env.STORAGE_ENDPOINT || undefined,
-  forcePathStyle: env.forcePathStyle,
+  forcePathStyle: env.STORAGE_FORCE_PATH_STYLE,
 })
 
 export { s3Client, s3PresignClient, stsClient }

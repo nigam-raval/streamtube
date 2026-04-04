@@ -8,7 +8,7 @@ dotenv.config({ path: '../../.env', quiet: true })
 // STARTUP_RETRY_DELAY,
 // STARTUP_MAX_RETRIES,
 // MONGODB_CONNECTION_TIMEOUT,
-// forcePathStyle,
+// STORAGE_FORCE_PATH_STYLE,
 // COOKIE_OPTION_HTTPONLY,
 // COOKIE_OPTION_SECURE
 // SKIP_ENV_VALIDATION,
@@ -69,7 +69,8 @@ const STARTUP_INITIAL_DELAY = Number(process.env.STARTUP_INITIAL_DELAY) || 10000
 const STARTUP_RETRY_DELAY = Number(process.env.STARTUP_RETRY_DELAY) || 5000
 const STARTUP_MAX_RETRIES = Number(process.env.STARTUP_MAX_RETRIES) || 3
 const MONGODB_CONNECTION_TIMEOUT = Number(process.env.MONGODB_CONNECTION_TIMEOUT) || 5000
-const forcePathStyle = String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
+const STORAGE_FORCE_PATH_STYLE =
+  String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
 const COOKIE_OPTION_HTTPONLY = process.env.COOKIE_OPTION_HTTPONLY?.toLowerCase() === 'true'
 const COOKIE_OPTION_SECURE = process.env.COOKIE_OPTION_SECURE?.toLowerCase() === 'true'
 
@@ -94,7 +95,7 @@ export const env = {
   STORAGE_SECRET_KEY,
   STORAGE_STS_USER,
   STORAGE_STS_PASSWORD,
-  forcePathStyle,
+  STORAGE_FORCE_PATH_STYLE,
   COOKIE_OPTION_HTTPONLY,
   COOKIE_OPTION_SECURE,
   REFRESH_TOKEN_SECRET,
