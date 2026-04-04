@@ -41,7 +41,7 @@ const missingVariables = requiredVariables.filter((Variable) => !process.env[Var
 const SKIP_ENV_VALIDATION = process.env.SKIP_ENV_VALIDATION?.toLowerCase() === 'true'
 
 if (missingVariables.length > 0 && SKIP_ENV_VALIDATION != true) {
-  throw new ApiError(500,`Missing required ENV variables: ${missingVariables.join(', ')}`)
+  throw new ApiError(500, `Missing required ENV variables: ${missingVariables.join(', ')}`)
 }
 
 const {
