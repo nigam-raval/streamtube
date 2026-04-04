@@ -2,23 +2,29 @@ import dotenv from 'dotenv'
 import { ApiError } from '../utils/ApiError.js'
 dotenv.config({ path: '../../.env', quiet: true })
 
+// not required as default value is provide
+// PORT,
+// STARTUP_INITIAL_DELAY,
+// STARTUP_RETRY_DELAY,
+// STARTUP_MAX_RETRIES,
+// MONGODB_CONNECTION_TIMEOUT,
+// forcePathStyle,
+// COOKIE_OPTION_HTTPONLY,
+// COOKIE_OPTION_SECURE
+// SKIP_ENV_VALIDATION,
+
 const requiredVariables = [
-  'PORT',
   'CORS_ORIGIN',
   'ACCESS_TOKEN_SECRET',
   'ACCESS_TOKEN_EXPIRE',
   'REFRESH_TOKEN_SECRET',
   'REFRESH_TOKEN_EXPIRE',
-  'STARTUP_MAX_RETRIES',
-  'COOKIE_OPTION_SECURE',
-  'COOKIE_OPTION_HTTPONLY',
   'APP_DOCKER_HOSTNAME',
   'MONGODB_ROOT_USERNAME',
   'MONGODB_ROOT_PASSWORD',
   'MONGODB_NAME',
   'MONGODB_AUTH_SOURCE',
   'MONGODB_URI',
-  'MONGODB_CONNECTION_TIMEOUT',
   'DATABASE_URL',
   'STORAGE_REGION',
   'STORAGE_ACCESS_KEY',
@@ -28,12 +34,13 @@ const requiredVariables = [
   'STORAGE_STS_PASSWORD',
   'STORAGE_ENDPOINT',
   'STORAGE_EXTERNAL_ENDPOINT',
-  'STORAGE_FORCE_PATH_STYLE',
 ]
 
 const missingVariables = requiredVariables.filter((Variable) => !process.env[Variable])
 
-if (missingVariables.length > 0) {
+const SKIP_ENV_VALIDATION = process.env.SKIP_ENV_VALIDATION?.toLowerCase() === 'true'
+
+if (missingVariables.length > 0 && SKIP_ENV_VALIDATION != true) {
   throw new ApiError(`Missing required ENV variables: ${missingVariables.join(', ')}`)
 }
 
@@ -61,10 +68,12 @@ const PORT = Number(process.env.PORT) || 8000
 const STARTUP_INITIAL_DELAY = Number(process.env.STARTUP_INITIAL_DELAY) || 10000
 const STARTUP_RETRY_DELAY = Number(process.env.STARTUP_RETRY_DELAY) || 5000
 const STARTUP_MAX_RETRIES = Number(process.env.STARTUP_MAX_RETRIES) || 3
-const MONGODB_CONNECTION_TIMEOUT= Number(process.env.MONGODB_CONNECTION_TIMEOUT)
+const MONGODB_CONNECTION_TIMEOUT = Number(process.env.MONGODB_CONNECTION_TIMEOUT) || 5000
 const forcePathStyle = String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
 const COOKIE_OPTION_HTTPONLY = process.env.COOKIE_OPTION_HTTPONLY?.toLowerCase() === 'true'
 const COOKIE_OPTION_SECURE = process.env.COOKIE_OPTION_SECURE?.toLowerCase() === 'true'
+
+// not exporting SKIP_ENV_VALIDATION (Reason: not exporting build flag in runtime)
 
 export const env = {
   PORT,
