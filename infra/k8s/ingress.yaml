@@ -16,7 +16,7 @@ spec:
               service:
                 name: streamtube-app
                 port:
-                  number: 8001
+                  number: 8080
 
     - host: minio.streamtube.local
       http:
