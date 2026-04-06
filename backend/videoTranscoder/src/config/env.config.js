@@ -1,16 +1,17 @@
 import dotenv from 'dotenv'
-dotenv.config({ path: '../../.env', quiet: true }) // '../../.env' is relative to process.cwd(), not this file
+dotenv.config({ path: '../../.env', quiet: true })
 
-// SKIP_ENV_VALIDATION is not check 'requiredVariables' as default value is provided
+// skip checking below variable in 'requiredVariables' as default value is provide
+// SKIP_ENV_VALIDATION
+// STORAGE_FORCE_PATH_STYLE
 const requiredVariables = [
-  'STORAGE_ENDPOINT',
   'STORAGE_REGION',
-  'STORAGE_BUCKET',
   'STORAGE_ACCESS_KEY',
   'STORAGE_SECRET_KEY',
-  'STORAGE_FORCE_PATH_STYLE',
-  'RABBITMQ_QUEUE',
+  'STORAGE_BUCKET',
+  'STORAGE_ENDPOINT',
   'RABBITMQ_URL',
+  'RABBITMQ_QUEUE',
 ]
 
 const missingVariables = requiredVariables.filter((Variable) => !process.env[Variable])
@@ -18,7 +19,8 @@ const missingVariables = requiredVariables.filter((Variable) => !process.env[Var
 const SKIP_ENV_VALIDATION = process.env.SKIP_ENV_VALIDATION?.toLowerCase() === 'true'
 
 if (missingVariables.length > 0 && SKIP_ENV_VALIDATION != true) {
-  console.error(`Missing required ENV variables: ${missingVariables.join(', ')}`)
+  console.error(`Missing required ENV variables: ${missingVariables.join(', ')}\nexiting`)
+  process.exit(1)
 }
 
 const {
@@ -27,10 +29,12 @@ const {
   STORAGE_BUCKET,
   STORAGE_ACCESS_KEY,
   STORAGE_SECRET_KEY,
-  STORAGE_FORCE_PATH_STYLE,
   RABBITMQ_QUEUE,
   RABBITMQ_URL,
 } = process.env
+
+const STORAGE_FORCE_PATH_STYLE =
+  String(process.env.STORAGE_FORCE_PATH_STYLE).toLowerCase() === 'true'
 
 // not exporting SKIP_ENV_VALIDATION (Reason: not exporting build flag in runtime)
 export const env = {
