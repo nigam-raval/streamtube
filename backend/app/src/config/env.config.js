@@ -1,8 +1,7 @@
 import dotenv from 'dotenv'
-import { ApiError } from '../utils/ApiError.js'
 dotenv.config({ path: '../../.env', quiet: true })
 
-// not required as default value is provide
+// skip checking below variable in requiredVariables as default value is provide
 // PORT,
 // STARTUP_INITIAL_DELAY,
 // STARTUP_RETRY_DELAY,
@@ -19,12 +18,9 @@ const requiredVariables = [
   'ACCESS_TOKEN_EXPIRE',
   'REFRESH_TOKEN_SECRET',
   'REFRESH_TOKEN_EXPIRE',
-  'APP_DOCKER_HOSTNAME',
-  'MONGODB_ROOT_USERNAME',
-  'MONGODB_ROOT_PASSWORD',
+  'MONGODB_URI',
   'MONGODB_NAME',
   'MONGODB_AUTH_SOURCE',
-  'MONGODB_URI',
   'DATABASE_URL',
   'STORAGE_REGION',
   'STORAGE_ACCESS_KEY',
@@ -41,27 +37,28 @@ const missingVariables = requiredVariables.filter((Variable) => !process.env[Var
 const SKIP_ENV_VALIDATION = process.env.SKIP_ENV_VALIDATION?.toLowerCase() === 'true'
 
 if (missingVariables.length > 0 && SKIP_ENV_VALIDATION != true) {
-  throw new ApiError(500, `Missing required ENV variables: ${missingVariables.join(', ')}`)
+  console.error(`Missing required ENV variables: ${missingVariables.join(', ')}\nexiting`)
+  process.exit(1)
 }
 
 const {
+  CORS_ORIGIN,
+  ACCESS_TOKEN_SECRET,
+  ACCESS_TOKEN_EXPIRE,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRE,
   MONGODB_URI,
   MONGODB_NAME,
-  CORS_ORIGIN,
   MONGODB_AUTH_SOURCE,
-  STORAGE_BUCKET,
   DATABASE_URL,
-  STORAGE_ENDPOINT,
-  STORAGE_EXTERNAL_ENDPOINT,
   STORAGE_REGION,
   STORAGE_ACCESS_KEY,
   STORAGE_SECRET_KEY,
+  STORAGE_BUCKET,
   STORAGE_STS_USER,
   STORAGE_STS_PASSWORD,
-  REFRESH_TOKEN_SECRET,
-  REFRESH_TOKEN_EXPIRE,
-  ACCESS_TOKEN_SECRET,
-  ACCESS_TOKEN_EXPIRE,
+  STORAGE_ENDPOINT,
+  STORAGE_EXTERNAL_ENDPOINT,
 } = process.env
 
 const PORT = Number(process.env.PORT) || 8000
