@@ -169,7 +169,7 @@ kubectl apply -k infra/k8s
 
 | Service | Port | URL |
 |---------|------|-----|
-| API Server | 8001 | `http://localhost:8001` |
+| API Server | 8080 | `http://localhost:8080` |
 | MinIO API | 9000 | `http://localhost:9000` |
 | MinIO Console | 9001 | `http://localhost:9001` |
 | MongoDB | 27017 | `mongodb://localhost:27017` |
