@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-dotenv.config({ quiet: true })
+dotenv.config({ path: '../../.env', quiet: true })
 
 // skip checking below variable in 'requiredVariables' as default value is provide
 // SKIP_ENV_VALIDATION
