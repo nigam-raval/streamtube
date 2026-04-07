@@ -119,6 +119,8 @@ cd streamtube
 
 # 2. Create environment file
 cp .env.example .env
+cp backend/app/.env.example backend/app/.env
+cp backend/videoTranscoder/.env.example backend/videoTranscoder/.env 
 
 # 3. Start all services
 docker compose -f compose.dev.yaml up
@@ -132,6 +134,8 @@ Production mode builds optimized Docker images:
 
 ```bash
 cp .env.example .env
+cp backend/app/.env.example backend/app/.env
+cp backend/videoTranscoder/.env.example backend/videoTranscoder/.env 
 # Edit .env with production credentials
 docker compose up --build
 ```

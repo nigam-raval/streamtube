@@ -4,30 +4,8 @@ services:
       context: ./
       dockerfile: ./backend/app/Dockerfile
     image: streamtube-app
-    environment:
-      MONGODB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
-      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
-      PORT: ${PORT}
-      MONGODB_URI: ${MONGODB_URI}
-      MONGODB_AUTH_SOURCE: ${MONGODB_AUTH_SOURCE}
-      CORS_ORIGIN: ${CORS_ORIGIN}
-      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-      ACCESS_TOKEN_EXPIRE: ${ACCESS_TOKEN_EXPIRE}
-      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
-      REFRESH_TOKEN_EXPIRE: ${REFRESH_TOKEN_EXPIRE}
-      DATABASE_URL: ${DATABASE_URL}
-      STORAGE_REGION: ${STORAGE_REGION}
-      STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY}
-      STORAGE_SECRET_KEY: ${STORAGE_SECRET_KEY}
-      STORAGE_BUCKET: ${STORAGE_BUCKET}
-      STORAGE_STS_USER: ${STORAGE_STS_USER}
-      STORAGE_STS_PASSWORD: ${STORAGE_STS_PASSWORD}
-      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
-      STORAGE_EXTERNAL_ENDPOINT: ${STORAGE_EXTERNAL_ENDPOINT}
-      STORAGE_FORCE_PATH_STYLE: ${STORAGE_FORCE_PATH_STYLE}
-      STARTUP_INITIAL_DELAY: ${STARTUP_INITIAL_DELAY}
-      STARTUP_RETRY_DELAY: ${STARTUP_RETRY_DELAY}
-      STARTUP_MAX_RETRIES: ${STARTUP_MAX_RETRIES}
+    env_file:
+      - ./backend/app/.env
     depends_on:
       mongodb:
         condition: service_healthy
@@ -57,16 +35,8 @@ services:
       context: ./
       dockerfile: ./backend/videoTranscoder/Dockerfile
     image: streamtube-video-transcoder-worker
-    environment:
-      STORAGE_REGION: ${STORAGE_REGION}
-      STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY}
-      STORAGE_SECRET_KEY: ${STORAGE_SECRET_KEY}
-      STORAGE_BUCKET: ${STORAGE_BUCKET}
-      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
-      STORAGE_FORCE_PATH_STYLE: ${STORAGE_FORCE_PATH_STYLE} # # For AWS,STORAGE_FORCE_PATH_STYLE: false
-      # RabbitMQ
-      RABBITMQ_QUEUE: ${RABBITMQ_QUEUE}
-      RABBITMQ_URL: ${RABBITMQ_URL}
+    env_file:
+      - ./backend/videoTranscoder/.env
     depends_on:
       minio:
         condition: service_healthy
