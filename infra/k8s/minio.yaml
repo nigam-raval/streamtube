@@ -156,6 +156,10 @@ spec:
                 secretKeyRef:
                   name: streamtube-secrets
                   key: STORAGE_ENDPOINT
+            - name: STORAGE_BUCKET
+              valueFrom:
+                name: streamtube-secrets
+                key: STORAGE_BUCKET
           volumeMounts:
             - name: setup-files
               mountPath: /setup
