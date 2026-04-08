@@ -13,8 +13,9 @@ done
 
 echo "RabbitMQ is up, init setup start"
 
-$CMD declare exchange --name=s3-exchange --type=direct --durable=true
-$CMD declare queue --name=s3-events --durable=true
-$CMD declare binding --source=s3-exchange --destination=s3-events --routing-key=s3 --destination-type=queue
+echo "Running Video Processing Pipeline Setup"
+$CMD declare exchange --name=${VIDEO_PROCESSING_EXCHANGE} --type=direct --durable=true
+$CMD declare queue --name=${VIDEO_PROCESSING_QUEUE} --durable=true
+$CMD declare binding --source=${VIDEO_PROCESSING_EXCHANGE} --destination=${VIDEO_PROCESSING_QUEUE} --routing-key=${VIDEO_PROCESSING_ROUTING_KEY} --destination-type=queue
 
 echo "RabbitMQ init Setup Complete"

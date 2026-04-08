@@ -140,6 +140,7 @@ services:
       STORAGE_STS_USER: ${STORAGE_STS_USER}
       STORAGE_STS_PASSWORD: ${STORAGE_STS_PASSWORD}
       STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
+      STORAGE_BUCKET: ${STORAGE_BUCKET}
     volumes:
       - ./infra/config/s3/init.sh/:/setup/init.sh
       - ./infra/config/s3/sts-streamtube-readonly-policy.json:/setup/sts-streamtube-readonly-policy.json
@@ -179,6 +180,9 @@ services:
       RABBITMQ_MANAGEMENT_PORT: ${RABBITMQ_MANAGEMENT_PORT}
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+      VIDEO_PROCESSING_EXCHANGE: ${VIDEO_PROCESSING_EXCHANGE}
+      VIDEO_PROCESSING_QUEUE: ${VIDEO_PROCESSING_QUEUE}
+      VIDEO_PROCESSING_ROUTING_KEY: ${VIDEO_PROCESSING_ROUTING_KEY}
     volumes:
       - ./infra/config/rabbitmq/init.sh:/usr/local/bin/init.sh:ro
     entrypoint: ['/bin/sh', '/usr/local/bin/init.sh']

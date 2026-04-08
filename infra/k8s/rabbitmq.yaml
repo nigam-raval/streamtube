@@ -115,6 +115,21 @@ spec:
                 secretKeyRef:
                   name: streamtube-secrets
                   key: RABBITMQ_MANAGEMENT_PORT
+            - name: VIDEO_PROCESSING_EXCHANGE
+              valueFrom:
+                secretKeyRef:
+                  name: streamtube-secrets
+                  key: VIDEO_PROCESSING_EXCHANGE
+            - name: VIDEO_PROCESSING_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: streamtube-secrets
+                  key: VIDEO_PROCESSING_QUEUE
+            - name: VIDEO_PROCESSING_ROUTING_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: streamtube-secrets
+                  key: VIDEO_PROCESSING_ROUTING_KEY
 
           volumeMounts:
             - name: rabbitmq-init-volume
