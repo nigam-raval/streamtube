@@ -95,6 +95,7 @@ In Docker Compose, KEDA is absent, so the worker runs in a polling loop (`sleep 
 | **Cookie Security** | `httpOnly: true`, `secure: true` |
 | **Presigned URLs** | Content-length limits + SHA256 checksum validation on uploads |
 | **Port Binding** | Docker Compose ports bound to `127.0.0.1` only |
+| **Microservice Secret Isolation** | Uses Kustomize to generate service-scoped secrets, enforcing the principle of least privilege. |
 
 ---
 
@@ -113,16 +114,16 @@ In Docker Compose, KEDA is absent, so the worker runs in a polling loop (`sleep 
 Development mode uses volume mounts and `nodemon` for hot reloading:
 
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone https://github.com/nigam-raval/streamtube.git
 cd streamtube
 
-# 2. Create environment file
+# Create environment file and fill with dev credentials
 cp .env.example .env
 cp backend/app/.env.example backend/app/.env
 cp backend/videoTranscoder/.env.example backend/videoTranscoder/.env 
 
-# 3. Start all services
+# Start all services
 docker compose -f compose.dev.yaml up
 ```
 
@@ -133,24 +134,29 @@ docker compose -f compose.dev.yaml up
 Production mode builds optimized Docker images:
 
 ```bash
+# Clone the repository
+git clone https://github.com/nigam-raval/streamtube.git
+cd streamtube
+
+# Create environment file and fill with real credentials
 cp .env.example .env
 cp backend/app/.env.example backend/app/.env
-cp backend/videoTranscoder/.env.example backend/videoTranscoder/.env 
-# Edit .env with production credentials
+cp backend/videoTranscoder/.env.example backend/videoTranscoder/.env
+
+# Start all services
 docker compose up --build
 ```
 
 ### Kubernetes
 
 ```bash
-cd infra/k8s
-
-# Create environment file
-# Edit .env.k8s with your K8s-specific values
-cp .env.k8s.example .env.k8s
-
-# Move to streamtube root
-cd ../..
+# Create environment file and fill with real credentials
+cp infra/k8s/app/app.env.example infra/k8s/app/app.env
+cp infra/k8s/video-transcoder/video-transcoder.env.example infra/k8s/video-transcoder/video-transcoder.env
+cp infra/k8s/postgres/postgres.env.example infra/k8s/postgres/postgres.env
+cp infra/k8s/mongodb/mongodb.env.example infra/k8s/mongodb/mongodb.env
+cp infra/k8s/minio/minio.env.example infra/k8s/minio/minio.env
+cp infra/k8s/rabbitmq/rabbitmq.env.example infra/k8s/rabbitmq/rabbitmq.env
 
 # Build and load Docker images into your cluster
 docker build -t streamtube-app  -f ./backend/app/Dockerfile .
@@ -161,9 +167,7 @@ docker build -t streamtube-video-transcoder-worker -f backend/videoTranscoder/Do
 kubectl apply -k infra/k8s
 ```
 
-> **Important:** K8s hostnames (e.g., `mongodb-0.mongodb.default.svc.cluster.local`) differ from Docker Compose hostnames (e.g., `mongodb`). Always use the correct `.env` file for each deployment target. 
 
-> **Why:** it is required because KEDA exist in different namespace so service required complete DNS name
 
 ---
 
