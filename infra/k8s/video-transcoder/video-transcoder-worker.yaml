@@ -44,4 +44,4 @@ spec:
                 cpu: '2000m'
             envFrom:
               - secretRef:
-                  name: streamtube-secrets
+                  name: video-transcoder-secrets

@@ -34,27 +34,22 @@ spec:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: mongodb-secrets
                   key: MONGODB_ROOT_USERNAME
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: mongodb-secrets
                   key: MONGODB_ROOT_PASSWORD
             - name: MONGODB_AUTH_SOURCE
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: mongodb-secrets
                   key: MONGODB_AUTH_SOURCE
 
           readinessProbe:
             exec:
-              command:
-                [
-                  '/bin/sh',
-                  '-c',
-                  'mongosh --quiet -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase $MONGODB_AUTH_SOURCE --eval ''db.adminCommand("ping").ok''',
-                ]
+              command: ['mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
@@ -62,12 +57,7 @@ spec:
 
           livenessProbe:
             exec:
-              command:
-                [
-                  '/bin/sh',
-                  '-c',
-                  'mongosh --quiet -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase $MONGODB_AUTH_SOURCE --eval ''db.adminCommand("ping").ok''',
-                ]
+              command: ['mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
             initialDelaySeconds: 20
             periodSeconds: 20
             timeoutSeconds: 5

@@ -3,18 +3,38 @@ kind: Kustomization
 
 resources:
   - ../config
-  - ingress.yaml
-  - app.yaml
-  - video-transcoder-worker.yaml
-  - rabbitmq.yaml
-  - minio.yaml
-  - postgres.yaml
-  - mongodb.yaml
+  - ingress/ingress.yaml
+  - app/app.yaml
+  - video-transcoder/video-transcoder-worker.yaml
+  - rabbitmq/rabbitmq.yaml
+  - minio/minio.yaml
+  - postgres/postgres.yaml
+  - mongodb/mongodb.yaml
 
 secretGenerator:
-  - name: streamtube-secrets
+  - name: app-secrets
     envs:
-      - .env.k8s
-    type: Opaque
+      - app/app.env
+
+  - name: postgres-secrets
+    envs:
+      - postgres/postgres.env
+
+  - name: mongodb-secrets
+    envs:
+      - mongodb/mongodb.env
+
+  - name: minio-secrets
+    envs:
+      - minio/minio.env
+
+  - name: rabbitmq-secrets
+    envs:
+      - rabbitmq/rabbitmq.env
+
+  - name: video-transcoder-secrets
+    envs:
+      - video-transcoder/video-transcoder.env
     options:
-      disableNameSuffixHash: true # because KEDA can't handle random suffix
+      # because KEDA can't handle random suffix
+      disableNameSuffixHash: true
