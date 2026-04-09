@@ -150,6 +150,10 @@ docker compose up --build
 ### Kubernetes
 
 ```bash
+# Clone the repository
+git clone https://github.com/nigam-raval/streamtube.git
+cd streamtube
+
 # Create environment file and fill with real credentials
 cp infra/k8s/app/app.env.example infra/k8s/app/app.env
 cp infra/k8s/video-transcoder/video-transcoder.env.example infra/k8s/video-transcoder/video-transcoder.env
