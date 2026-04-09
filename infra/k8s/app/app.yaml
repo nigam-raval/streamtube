@@ -5,8 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    part-of: streamtube
-    component: app
+    app: streamtube-app
   ports:
     - port: 8080
       targetPort: 8080
@@ -20,13 +19,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      part-of: streamtube
-      component: app
+      app: streamtube-app
   template:
     metadata:
       labels:
-        part-of: streamtube
-        component: app
+        app: streamtube-app
     spec:
       containers:
         - name: app
@@ -63,4 +60,4 @@ spec:
 
           envFrom:
             - secretRef:
-                name: streamtube-secrets
+                name: app-secrets

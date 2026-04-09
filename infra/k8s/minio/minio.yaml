@@ -41,47 +41,47 @@ spec:
             - name: MINIO_ROOT_USER
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_ACCESS_KEY
             - name: MINIO_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_SECRET_KEY
             - name: MINIO_NOTIFY_AMQP_ENABLE_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_ENABLE_rabbitmq1
             - name: MINIO_NOTIFY_AMQP_URL_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_URL_rabbitmq1
             - name: MINIO_NOTIFY_AMQP_EXCHANGE_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_EXCHANGE_rabbitmq1
             - name: MINIO_NOTIFY_AMQP_EXCHANGE_TYPE_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_EXCHANGE_TYPE_rabbitmq1
             - name: MINIO_NOTIFY_AMQP_ROUTING_KEY_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_ROUTING_KEY_rabbitmq1
             - name: MINIO_NOTIFY_AMQP_DURABLE_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_DURABLE_rabbitmq1
             - name: MINIO_NOTIFY_AMQP_DELIVERY_MODE_rabbitmq1
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: MINIO_NOTIFY_AMQP_DELIVERY_MODE_rabbitmq1
 
           ports:
@@ -134,32 +134,33 @@ spec:
             - name: MINIO_ROOT_USER
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_ACCESS_KEY
             - name: MINIO_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_SECRET_KEY
             - name: STORAGE_STS_USER
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_STS_USER
             - name: STORAGE_STS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_STS_PASSWORD
             - name: STORAGE_ENDPOINT
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: minio-secrets
                   key: STORAGE_ENDPOINT
             - name: STORAGE_BUCKET
               valueFrom:
-                name: streamtube-secrets
-                key: STORAGE_BUCKET
+                secretKeyRef:
+                  name: minio-secrets
+                  key: STORAGE_BUCKET
           volumeMounts:
             - name: setup-files
               mountPath: /setup

@@ -34,17 +34,17 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: postgres-secrets
                   key: PGUSER
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: postgres-secrets
                   key: PGDATABASE
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: streamtube-secrets
+                  name: postgres-secrets
                   key: PGPASSWORD
 
           readinessProbe:
