@@ -16,7 +16,7 @@ spec:
       metadata:
         protocol: amqp
         hostFromEnv: RABBITMQ_URL
-        queueName: s3-events
+        queueName: video.transcode.queue
         mode: QueueLength
         value: '1' # 1 message = 1 worker pod
 
