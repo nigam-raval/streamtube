@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-CMD="rabbitmqadmin -H ${INIT_RABBITMQ_HOST} -P ${INIT_RABBITMQ_MANAGEMENT_PORT}  -u ${RABBITMQ_DEFAULT_USER} -p ${RABBITMQ_DEFAULT_PASS}"
+CMD="rabbitmqadmin -H ${INIT_RABBITMQ_HOST} -P ${INIT_RABBITMQ_MANAGEMENT_PORT} -u ${RABBITMQ_DEFAULT_USER} -p ${RABBITMQ_DEFAULT_PASS}"
 
 # > /dev/null : Sends success output to trash
 # 2>&1 : Sends errors to trash too
