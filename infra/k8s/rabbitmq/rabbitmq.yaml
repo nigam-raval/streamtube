@@ -36,17 +36,9 @@ spec:
           ports:
             - containerPort: 5672
             - containerPort: 15672
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: RABBITMQ_DEFAULT_USER
-            - name: RABBITMQ_DEFAULT_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: RABBITMQ_DEFAULT_PASS
+          envFrom:
+            - secretRef:
+                name: rabbitmq-secrets
           resources:
             requests:
               memory: '256Mi'
@@ -94,43 +86,9 @@ spec:
         - name: rabbitmq-init
           image: rabbitmq:4.2-management
           command: ['/bin/sh', '/scripts/init.sh']
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: RABBITMQ_DEFAULT_USER
-            - name: RABBITMQ_DEFAULT_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: RABBITMQ_DEFAULT_PASS
-            - name: RABBITMQ_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: RABBITMQ_HOST
-            - name: RABBITMQ_MANAGEMENT_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: RABBITMQ_MANAGEMENT_PORT
-            - name: VIDEO_PROCESSING_EXCHANGE
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: VIDEO_PROCESSING_EXCHANGE
-            - name: VIDEO_PROCESSING_QUEUE
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: VIDEO_PROCESSING_QUEUE
-            - name: VIDEO_PROCESSING_ROUTING_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secrets
-                  key: VIDEO_PROCESSING_ROUTING_KEY
-
+          envFrom:
+            - secretRef:
+                name: rabbitmq-secrets
           volumeMounts:
             - name: rabbitmq-init-volume
               mountPath: /scripts
