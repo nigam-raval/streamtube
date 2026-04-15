@@ -40,7 +40,7 @@ StreamTube is a backend that handles video upload, transcoding, and streaming vi
 
 1. User requests a presigned upload URL from the API
 2. Client uploads MP4 directly to MinIO(S3) under `private/` prefix
-3. MinIO fires an AMQP event to RabbitMQ (`s3-exchange` → `s3-events` queue)
+3. MinIO fires an AMQP event to RabbitMQ (`video.events` → `video.transcode.queue`)
 4. Transcoder worker picks up the message and downloads the video
 5. Worker validates file extension (`.mp4`) and magic bytes (prevents malicious files)
 6. FFmpeg transcodes into adaptive HLS (360p, 480p, 720p, 1080p) with 5-second segments
