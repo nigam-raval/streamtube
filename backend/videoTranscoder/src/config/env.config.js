@@ -11,7 +11,7 @@ const requiredVariables = [
   'STORAGE_BUCKET',
   'STORAGE_ENDPOINT',
   'RABBITMQ_URL',
-  'RABBITMQ_QUEUE',
+  'RABBITMQ_VIDEO_PROCESSING_QUEUE',
 ]
 
 const missingVariables = requiredVariables.filter((Variable) => !process.env[Variable])
@@ -29,7 +29,7 @@ const {
   STORAGE_BUCKET,
   STORAGE_ACCESS_KEY,
   STORAGE_SECRET_KEY,
-  RABBITMQ_QUEUE,
+  RABBITMQ_VIDEO_PROCESSING_QUEUE,
   RABBITMQ_URL,
 } = process.env
 
@@ -44,6 +44,6 @@ export const env = {
   STORAGE_ACCESS_KEY,
   STORAGE_SECRET_KEY,
   STORAGE_FORCE_PATH_STYLE,
-  RABBITMQ_QUEUE,
+  RABBITMQ_VIDEO_PROCESSING_QUEUE,
   RABBITMQ_URL,
 }
