@@ -1,20 +1,11 @@
-import amqp from 'amqplib'
-import { env } from '../config/env.config.js'
+import { rabbitmqConfig } from '../config/rabbitmq.config.js'
 
-export async function fetchOneRabbitmqMessage() {
-  let connection
-  let channel
-
+export async function fetchOneRabbitmqMessage(connection, channel) {
   try {
-    console.log('rabbitmq service started')
-    connection = await amqp.connect(env.RABBITMQ_URL)
-    channel = await connection.createChannel()
-    await channel.assertQueue(env.RABBITMQ_VIDEO_PROCESSING_QUEUE, { durable: true })
-
     console.log('Waiting for one message')
 
     // Get a single message (no consumer loop)
-    const msg = await channel.get(env.RABBITMQ_VIDEO_PROCESSING_QUEUE, { noAck: false })
+    const msg = await channel.get(rabbitmqConfig.videoProcessingQueue, { noAck: false })
 
     if (!msg) {
       console.log('! No message in queue')
@@ -34,14 +25,14 @@ export async function fetchOneRabbitmqMessage() {
     }
 
     console.log('RabbitMq messaged fetched')
-    return { msg, key, channel, connection }
+    return { msg, key }
   } catch (err) {
     console.error('RabbitMQ error:', err)
     process.exit(1)
   }
 }
 
-export async function sendRabbitmqAck(msg, channel, connection) {
+export async function sendRabbitmqAck(connection, channel, msg) {
   channel.ack(msg)
 
   await channel.close()
